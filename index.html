@@ -3,612 +3,1180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>航空維修人員工作經歷簿 · 自動化工具</title>
-    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js">
-    </script>
-    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js">
-    </script>
+    <title>手冊資訊 - 雲端版本</title>
     <style>
-        :root {
-            --bg: #f0f4f8;
-            --card-bg: #ffffff;
-            --primary: #1a73e8;
-            --text: #2c3e50;
-            --text-light: #5a6c7d;
-            --border: #dce1e8;
-            --radius: 10px;
-            --shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-            --tag-bg: #e8f0fe;
-            --tag-active: #1a73e8;
-            --tag-active-text: #fff;
-        }
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
+        
         body {
-            font-family: 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            padding: 24px 20px 60px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        .card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 24px 28px;
-            margin-bottom: 20px;
-            border: 1px solid var(--border);
-        }
-        h2 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #1a3c5e;
-            border-bottom: 2px solid #e8f0fe;
-            padding-bottom: 10px;
-        }
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 14px;
-        }
-        .form-group {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            padding: 15px;
+            color: #333;
+            line-height: 1.5;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            min-height: 100vh;
         }
-        label {
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: var(--text-light);
-        }
-        input, select {
-            padding: 10px 12px;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            font-size: 0.95rem;
-            background: #f8fafc;
-            outline: none;
-            transition: border-color 0.2s;
-            font-family: inherit;
-        }
-        input:focus, select:focus {
-            border-color: var(--primary);
-            background: #fff;
-        }
-        .btn-row {
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            flex: 1;
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
+            flex-direction: column;
         }
-        .btn-tag {
-            padding: 8px 16px;
-            border: 2px solid var(--border);
-            border-radius: 20px;
-            background: #f8fafc;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 0.85rem;
-            transition: all 0.2s;
-            user-select: none;
-        }
-        .btn-tag.active {
-            background: var(--tag-active);
-            color: var(--tag-active-text);
-            border-color: var(--tag-active);
-        }
-        .radio-row {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            margin-top: 8px;
-        }
-        .radio-row label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-        }
-        .btn-primary {
-            padding: 12px 28px;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            font-family: inherit;
-        }
-        .btn-primary:hover {
-            background: #1557b0;
-        }
-        .btn-primary:disabled {
-            background: #b0c4de;
-            cursor: not-allowed;
-        }
-        .upload-box {
-            border: 2px dashed var(--border);
-            border-radius: var(--radius);
-            padding: 20px;
+        
+        .main-title {
             text-align: center;
-            cursor: pointer;
-            background: #fafbfc;
-            transition: 0.2s;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.5em;
         }
-        .upload-box:hover {
-            border-color: var(--primary);
-            background: #f4f8ff;
+        
+        .acknowledgment {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.8em;
+            margin-bottom: 15px;
+            font-style: italic;
         }
-        .status {
-            margin: 12px 0;
-            padding: 10px 16px;
+        
+        .disclaimer-container {
+            background-color: #fff;
             border-radius: 8px;
-            font-weight: 500;
-            font-size: 0.9rem;
-            display: none;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 4px solid #e74c3c;
         }
-        .status.info {
-            background: #e8f0fe;
-            color: #1a73e8;
-            display: block;
-        }
-        .status.success {
-            background: #e6f7ee;
-            color: #27ae60;
-            display: block;
-        }
-        .status.error {
-            background: #fdecea;
+        
+        .disclaimer-title {
+            font-weight: bold;
+            margin-bottom: 8px;
             color: #e74c3c;
+            font-size: 0.85em;
+        }
+        
+        .disclaimer-content {
+            font-size: 0.75em;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .disclaimer-content p {
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+        
+        .disclaimer-content p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .time-section {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .time-card {
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .card-title {
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #2c3e50;
+        }
+        
+        .time-display {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .time-item {
+            margin: 3px 0;
+        }
+        
+        .time-label {
+            font-size: 0.75em;
+            color: #7f8c8d;
+            font-weight: bold;
+        }
+        
+        .time-value {
+            font-size: 0.95em;
+            font-weight: bold;
+        }
+        
+        .card-1 { background-color: #fff9c4; }
+        .card-2 { background-color: #c8e6c9; }
+        .card-3 { background-color: #fff9c4; }
+        .card-4 { background-color: #c8e6c9; }
+        .card-5 { background-color: #fff9c4; }
+        
+        .table-content-section {
+            margin: 20px 0;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
             display: block;
         }
-        .status.warning {
-            background: #fef5e7;
-            color: #f39c12;
-            display: block;
+        
+        .table-content-header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .preview-table {
+        
+        .table-content-title {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .table-content-toggle {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        
+        .table-content-body {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .table-content-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
-            font-size: 0.8rem;
         }
-        .preview-table th {
-            background: #f0f4f8;
-            padding: 6px 8px;
+        
+        .table-content-table th {
+            background-color: #f2f2f2;
+            padding: 10px 8px;
             text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 0.85em;
             position: sticky;
             top: 0;
         }
-        .preview-table td {
-            padding: 5px 8px;
-            border-top: 1px solid #eef1f5;
+        
+        .table-content-table td {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.8em;
+            vertical-align: top;
+            position: relative;
+        }
+        
+        .table-content-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .table-content-table tr:hover {
+            background-color: #f0f7ff;
+        }
+        
+        .password-section {
+            margin-top: auto;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .password-input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+            width: 200px;
+        }
+        
+        .password-btn {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .password-btn:hover {
+            background-color: #45a049;
+        }
+        
+        .password-error {
+            color: #e74c3c;
+            margin-top: 10px;
+            font-size: 0.9em;
+            display: none;
+        }
+        
+        .type-aligned-header {
+            margin-left: 280px;
+        }
+        
+        .type-aligned-data {
+            margin-left: -120px;
+            display: inline-block;
+            width: 160px;
+            text-align: left;
+        }
+        
+        .recently-updated {
+            background-color: #FFF56E !important;
+            transition: background-color 0.3s ease;
+        }
+        
+        .editable-cell {
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .edit-input {
+            width: 100%;
+            padding: 4px;
+            border: 1px solid #3498db;
+            border-radius: 3px;
+            font-size: 0.8em;
+        }
+        
+        .edit-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .edit-controls {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        
+        .edit-btn {
+            padding: 3px 8px;
+            font-size: 0.7em;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .save-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .cancel-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .edit-mode-indicator {
+            background-color: #e8f4fd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+            color: #2c3e50;
+            border: 1px solid #3498db;
+        }
+        
+        .selected-row {
+            background-color: #e8f4fd !important;
+        }
+        
+        .connection-status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .connection-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .connection-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        @media (max-width: 1024px) {
+            .time-section { grid-template-columns: repeat(3, 1fr); }
+        }
+        
+        @media (max-width: 768px) {
+            .time-section { grid-template-columns: repeat(2, 1fr); }
+            .type-aligned-header { margin-left: 210px; }
+            .type-aligned-data { margin-left: -90px; width: 120px; }
+        }
+        
+        @media (max-width: 480px) {
+            .time-section { grid-template-columns: 1fr; }
+            .type-aligned-header { margin-left: 120px; }
+            .type-aligned-data { margin-left: -60px; width: 80px; }
         }
     </style>
 </head>
 <body>
-    <div style="text-align:center; margin-bottom: 24px;">
-        <h1 style="color:#1a3c5e;">🛠️ 航空維修人員工作經歷簿</h1>
-        <p style="color:var(--text-light)">三步驟：上傳模板 → 填寫資料 → 上傳工作經歷 → 一鍵生成</p>
-    </div>
-
-    <!-- 步驟1：上傳模板 -->
-    <div class="card">
-        <h2>📋 步驟 1：加載工作經歷簿模板</h2>
-        <p style="color:var(--text-light); margin-bottom:10px;">請上傳「工作經歷簿 r8 部分有語法.xlsx」模板檔案（只需一次）。</p>
-        <div class="upload-box" id="templateUpload" onclick="document.getElementById('templateFileInput').click()">
-            <div style="font-size:2rem;">📂</div>
-            <p>點擊此處選擇模板檔案</p>
-            <div id="templateFileName" style="color:var(--primary);font-weight:600;display:none;"></div>
+    <div class="container">
+        <h1 class="main-title">手冊資訊 - 雲端版本</h1>
+        <p class="acknowledgment">*特別感謝 吳30cm默默付出</p>
+        
+        <div class="disclaimer-container">
+            <div class="disclaimer-title">*免責聲明：</div>
+            <div class="disclaimer-content">
+                <p>本網站資訊僅供參考。</p>
+                <p>由於工作輪班、休假及休息等因素，內容可能未能即時更新，若有資訊延遲、錯誤或疏漏，敬請見諒。</p>
+                <p>本網站為非營利性質，僅供內部交流與學習使用，無任何商業用途或利益行為。</p>
+                <p>使用本網站資料所產生之任何文件錯誤或損失，本網站概不負責。使用者應自行核對與確認資訊之正確性後再行採用，謝謝。</p>
+            </div>
         </div>
-        <input type="file" id="templateFileInput" accept=".xlsx" style="display:none;">
-        <div id="templateStatus" class="status"></div>
-    </div>
 
-    <!-- 步驟2：個人資料 -->
-    <div class="card">
-        <h2>👤 步驟 2：填寫個人資料</h2>
-        <div class="form-grid">
-            <div class="form-group"><label>全名</label><input type="text" id="fullName" value="王小明"></div>
-            <div class="form-group"><label>工號</label><input type="text" id="empId" value="E12345"></div>
-            <div class="form-group"><label>出生日期</label><input type="date" id="birthDate" value="1990-01-01"></div>
-            <div class="form-group"><label>國籍</label><input type="text" id="nationality" value="台灣"></div>
-            <div class="form-group" style="grid-column:span 2;"><label>永久地址</label><input type="text" id="permanentAddress" value="台北市信義區信義路五段7號"></div>
-            <div class="form-group"><label>執照號碼</label><input type="text" id="licenseNumber" value="CAA-12345"></div>
-            <div class="form-group"><label>執照類別</label><input type="text" id="licenseCategory" value="B1.1"></div>
-            <div class="form-group"><label>聘僱日期</label><input type="date" id="hireDate" value="2020-01-01"></div>
-            <div class="form-group"><label>職務</label><select id="jobTitle">
-                <option value="技術員">技術員</option><option value="領工">領工</option><option value="領班">領班</option><option value="組長" selected>組長</option>
-            </select></div>
-            <div class="form-group" style="grid-column:span 2;">
-                <label>工作機型（複選）</label>
-                <div class="btn-row" id="acTypeBtns">
-                    <span class="btn-tag" data-val="B737-800">B737-800</span>
-                    <span class="btn-tag" data-val="B747-400">B747-400</span>
-                    <span class="btn-tag" data-val="B777-300">B777-300</span>
-                    <span class="btn-tag" data-val="A330-300">A330-300</span>
-                    <span class="btn-tag" data-val="A350-900">A350-900</span>
-                    <span class="btn-tag active" data-val="A321NEO">A321NEO</span>
+        <div id="connection-status" class="connection-status">
+            正在連接雲端資料庫...
+        </div>
+        
+        <!-- 時間顯示部分 -->
+        <div class="time-section">
+            <!-- 第一欄：台灣時間和UTC時間 -->
+            <div class="time-card card-1">
+                <div class="card-title">當前時間</div>
+                <div class="time-display">
+                    <div class="time-item">
+                        <div class="time-label">台灣時間</div>
+                        <div class="time-value" id="taiwan-time">--:--:--</div>
+                    </div>
+                    <div class="time-item">
+                        <div class="time-label">星期</div>
+                        <div class="time-value" id="taiwan-day">--</div>
+                    </div>
+                    <div class="time-item">
+                        <div class="time-label">UTC時間</div>
+                        <div class="time-value" id="utc-time">--:--:--</div>
+                    </div>
+                    <div class="time-item">
+                        <div class="time-label">虎航/越南 UTC</div>
+                        <div class="time-value" id="tigerair-utc">--:--:--</div>
+                    </div>
                 </div>
-                <input type="hidden" id="aircraftType" value="A321NEO">
             </div>
-            <div class="form-group"><label>工作地點</label><select id="workLocation">
-                <option value="桃園 CAL-EMO/CKS" selected>桃園 CAL-EMO/CKS</option>
-                <option value="高雄 CAL-EMO/KHH">高雄 CAL-EMO/KHH</option>
-            </select></div>
-        </div>
-        <div style="margin-top:14px;">
-            <label style="font-weight:600;font-size:0.85rem;color:var(--text-light);">每頁記錄筆數</label>
-            <div class="radio-row">
-                <label><input type="radio" name="rowsPerPage" value="8" checked> 8 筆</label>
-                <label><input type="radio" name="rowsPerPage" value="10"> 10 筆</label>
+            
+            <!-- 第二欄：CAT B -->
+            <div class="time-card card-2">
+                <div class="card-title">CAT B</div>
+                <div class="time-display">
+                    <div class="time-item">
+                        <div class="time-label">3天後</div>
+                        <div class="time-value" id="plus3-b">--</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 第三欄：CAT C -->
+            <div class="time-card card-3">
+                <div class="card-title">CAT C</div>
+                <div class="time-display">
+                    <div class="time-item">
+                        <div class="time-label">10天後</div>
+                        <div class="time-value" id="plus10-c">--</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 第四欄：CAT D -->
+            <div class="time-card card-4">
+                <div class="card-title">CAT D / 虎航NEF</div>
+                <div class="time-display">
+                    <div class="time-item">
+                        <div class="time-label">120天後</div>
+                        <div class="time-value" id="plus120-d">--</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 第五欄：180天後 -->
+            <div class="time-card card-5">
+                <div class="card-title">180天後</div>
+                <div class="time-display">
+                    <div class="time-item">
+                        <div class="time-label">日期</div>
+                        <div class="time-value" id="plus180">--</div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-
-    <!-- 步驟3：上傳工作經歷並產生 -->
-    <div class="card">
-        <h2>📤 步驟 3：上傳工作經歷 & 生成檔案</h2>
-        <div class="upload-box" id="workUpload" onclick="document.getElementById('workFileInput').click()">
-            <div style="font-size:2rem;">📊</div>
-            <p>點擊此處上傳工作經歷 Excel 檔案</p>
-            <div id="workFileName" style="color:var(--primary);font-weight:600;display:none;"></div>
+        
+        <!-- 編輯模式指示器 -->
+        <div class="edit-mode-indicator" id="edit-mode-indicator" style="display: none;">
+            編輯模式已啟用 - 勾選要編輯的列，版本和日期欄位會自動變成編輯模式
         </div>
-        <input type="file" id="workFileInput" accept=".xlsx,.xls" style="display:none;">
-        <div id="workPreview" style="max-height:240px;overflow:auto;display:none;margin-top:10px;"></div>
-        <div id="workStatus" class="status"></div>
-        <button class="btn-primary" id="generateBtn" style="margin-top:16px;" onclick="generateWorkbook()">🚀 生成並下載 Excel 檔案</button>
+        
+        <!-- 表格内容显示区域 -->
+        <div class="table-content-section" id="table-content-section">
+            <div class="table-content-header">
+                <div class="table-content-title">手冊表格內容</div>
+                <button class="table-content-toggle" id="table-toggle">隱藏表格</button>
+            </div>
+            <div class="table-content-body">
+                <table class="table-content-table" id="table-content">
+                    <!-- 表格内容将通过JavaScript动态生成 -->
+                </table>
+            </div>
+        </div>
+        
+        <!-- 密碼保護區域 -->
+        <div class="password-section">
+            <h2>表格編輯區域（需要密碼）</h2>
+            <div style="margin: 15px 0;">
+                <input type="password" class="password-input" id="password-input" placeholder="請輸入密碼">
+                <button class="password-btn" id="password-btn">驗證密碼</button>
+            </div>
+            <div class="password-error" id="password-error">密碼錯誤，請重新輸入</div>
+        </div>
     </div>
 
     <script>
-        // ==================== 全局變數 ====================
-        let templateWorkbook = null; // 快取模板 Workbook 物件
-        let uploadedWorkData = [];    // 上傳的工作經歷資料
-
-        // ==================== DOM 元素 ====================
-        const templateFileInput = document.getElementById('templateFileInput');
-        const templateFileName = document.getElementById('templateFileName');
-        const templateStatus = document.getElementById('templateStatus');
-
-        const workFileInput = document.getElementById('workFileInput');
-        const workFileName = document.getElementById('workFileName');
-        const workPreview = document.getElementById('workPreview');
-        const workStatus = document.getElementById('workStatus');
-        const generateBtn = document.getElementById('generateBtn');
-        generateBtn.disabled = true;
-
-        // 機型按鈕
-        const acTypeBtns = document.querySelectorAll('#acTypeBtns .btn-tag');
-        const aircraftTypeHidden = document.getElementById('aircraftType');
-        acTypeBtns.forEach(btn => btn.addEventListener('click', () => {
-            btn.classList.toggle('active');
-            const selected = [];
-            acTypeBtns.forEach(b => { if (b.classList.contains('active')) selected.push(b.dataset.val); });
-            aircraftTypeHidden.value = selected.join('/') || '';
-        }));
-
-        // ==================== 步驟1：載入模板 ====================
-        templateFileInput.addEventListener('change', async (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-            templateFileName.textContent = '📄 ' + file.name;
-            templateFileName.style.display = 'block';
-            setStatus(templateStatus, 'info', '正在載入模板...');
-            try {
-                const ab = await file.arrayBuffer();
-                templateWorkbook = new ExcelJS.Workbook();
-                await templateWorkbook.xlsx.load(ab);
-                setStatus(templateStatus, 'success', '✅ 模板載入成功，已快取。');
-                generateBtn.disabled = false;
-            } catch (err) {
-                setStatus(templateStatus, 'error', '❌ 模板載入失敗：' + err.message);
-                generateBtn.disabled = true;
-            }
-        });
-
-        // ==================== 步驟3：上傳工作經歷 ====================
-        workFileInput.addEventListener('change', async (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-            workFileName.textContent = '📄 ' + file.name;
-            workFileName.style.display = 'block';
-            setStatus(workStatus, 'info', '正在解析工作經歷...');
-            try {
-                const data = await parseWorkExperience(file);
-                uploadedWorkData = data;
-                setStatus(workStatus, 'success', `✅ 共解析 ${data.length} 筆記錄。`);
-                renderWorkPreview(data);
-                workPreview.style.display = 'block';
-            } catch (err) {
-                setStatus(workStatus, 'error', '❌ 解析失敗：' + err.message);
-                uploadedWorkData = [];
-                workPreview.style.display = 'none';
-            }
-        });
-
-        async function parseWorkExperience(file) {
-            const ab = await file.arrayBuffer();
-            const wb = XLSX.read(ab, { type: 'array' });
-            const sheet = wb.Sheets[wb.SheetNames[0]];
-            const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
-            if (rows.length < 2) throw new Error('資料列不足');
-            // 尋找標題行
-            let headerIdx = -1;
-            for (let i = 0; i < Math.min(rows.length, 10); i++) {
-                const r = rows[i];
-                const s = r.map(c => String(c).toLowerCase()).join(' ');
-                if (s.includes('日期') && (s.includes('機號') || s.includes('工時') || s.includes('任務'))) {
-                    headerIdx = i;
-                    break;
-                }
-            }
-            if (headerIdx === -1) throw new Error('找不到標題行（需含「日期、機號、實際工時、任務描述」）');
-            const hdr = rows[headerIdx].map(c => String(c).trim());
-            const colDate = hdr.findIndex(c => c.includes('日期'));
-            const colAc = hdr.findIndex(c => c.includes('機號'));
-            const colHours = hdr.findIndex(c => c.includes('工時') || c.includes('實際工時'));
-            const colDesc = hdr.findIndex(c => c.includes('任務') || c.includes('描述'));
-            if (colDate === -1 || colAc === -1) throw new Error('找不到「日期」或「機號」欄位');
-            const result = [];
-            for (let i = headerIdx + 1; i < rows.length; i++) {
-                const r = rows[i];
-                if (!r || r.every(c => String(c).trim() === '')) continue;
-                const dateVal = r[colDate];
-                const acVal = String(r[colAc] || '').trim();
-                if (!acVal) continue;
-                const hours = colHours >= 0 ? parseFloat(r[colHours]) || 0 : 0;
-                const desc = colDesc >= 0 ? String(r[colDesc] || '').trim() : '';
-                result.push({
-                    date: parseDate(dateVal),
-                    aircraft: acVal,
-                    hours,
-                    description: desc,
-                    aircraftType: mapAircraftType(acVal)
+        // === 請替換為您的新部署 URL ===
+        const GAS_URL = '您的新部署URL放在這裡';
+        // =================================
+        
+        // 連接狀態
+        let cloudConnected = false;
+        
+        // 時間更新功能
+        function updateTime() {
+            const now = new Date();
+            
+            // 台灣時間 (UTC+8)
+            const taiwanTime = now.toLocaleString('zh-TW', { 
+                timeZone: 'Asia/Taipei',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+            
+            // 台灣時間星期幾
+            const taiwanDay = now.toLocaleString('zh-TW', { 
+                timeZone: 'Asia/Taipei',
+                weekday: 'long'
+            });
+            
+            // UTC時間 (年/月/日 時間)
+            const utcDate = now.toLocaleString('zh-TW', {
+                timeZone: 'UTC',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+            
+            // 虎航/越南 UTC時間 (日/月/年 時間)
+            const tigerairUTCDate = now.toLocaleString('en-GB', {
+                timeZone: 'UTC',
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            }).replace(',', '');
+            
+            // 更新第一欄
+            document.getElementById('taiwan-time').textContent = taiwanTime;
+            document.getElementById('taiwan-day').textContent = taiwanDay;
+            document.getElementById('utc-time').textContent = utcDate;
+            document.getElementById('tigerair-utc').textContent = tigerairUTCDate;
+            
+            // 日期格式化函數
+            function formatDate(date) {
+                return date.toLocaleDateString('zh-TW', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
                 });
             }
-            return result;
+            
+            // 更新CAT B
+            const plus3 = new Date(now);
+            plus3.setDate(now.getDate() + 3);
+            document.getElementById('plus3-b').textContent = formatDate(plus3);
+            
+            // 更新CAT C
+            const plus10 = new Date(now);
+            plus10.setDate(now.getDate() + 10);
+            document.getElementById('plus10-c').textContent = formatDate(plus10);
+            
+            // 更新CAT D
+            const plus120 = new Date(now);
+            plus120.setDate(now.getDate() + 120);
+            document.getElementById('plus120-d').textContent = formatDate(plus120);
+            
+            // 更新180天後
+            const plus180 = new Date(now);
+            plus180.setDate(now.getDate() + 180);
+            document.getElementById('plus180').textContent = formatDate(plus180);
         }
-
-        function parseDate(val) {
-            if (!val) return '';
-            if (val instanceof Date) return formatDate(val);
-            const str = String(val).trim();
-            const m = str.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/);
-            if (m) return `${m[1]}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}`;
-            const num = parseFloat(str);
-            if (!isNaN(num) && num > 30000 && num < 80000) {
-                return formatDate(new Date((num - 25569) * 86400 * 1000));
-            }
-            return str;
-        }
-        function formatDate(d) {
-            return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-        }
-
-        function mapAircraftType(reg) {
-            const s = String(reg).trim().toUpperCase();
-            if (s.startsWith('B-180')) return '773';
-            if (s.startsWith('B-181')) return 'A321N';
-            if (s.startsWith('B-182')) return '744';
-            if (s.startsWith('B-183')) return 'A333';
-            if (s.startsWith('B-186')) return '738';
-            if (s.startsWith('B-1877')) return '777F';
-            if (s.startsWith('B-187')) return '744F';
-            if (s.startsWith('B-189')) return 'A359';
-            return '';
-        }
-
-        function renderWorkPreview(data) {
-            const max = 50;
-            let html = '<table class="preview-table"><thead><tr><th>#</th><th>日期</th><th>機號</th><th>機型</th><th>工時</th><th>任務描述</th></tr></thead><tbody>';
-            data.slice(0, max).forEach((d, i) => {
-                html += `<tr><td>${i+1}</td><td>${d.date}</td><td>${d.aircraft}</td><td>${d.aircraftType}</td><td>${d.hours}</td><td>${escapeHtml(d.description)}</td></tr>`;
+        
+        // 初始更新
+        updateTime();
+        
+        // 每秒更新一次時間
+        setInterval(updateTime, 1000);
+        
+        // 獲取當前日期（用於更新日期）
+        function getCurrentDate() {
+            const now = new Date();
+            return now.toLocaleDateString('zh-TW', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
             });
-            if (data.length > max) html += `<tr><td colspan="6">... 還有 ${data.length - max} 筆</td></tr>`;
-            html += '</tbody></table>';
-            workPreview.innerHTML = html;
         }
-
-        function escapeHtml(s) {
-            const div = document.createElement('div');
-            div.textContent = s;
-            return div.innerHTML;
+        
+        // 檢查日期是否在四個月內
+        function isWithinFourMonths(dateStr) {
+            if (!dateStr) return false;
+            
+            const now = new Date();
+            const targetDate = new Date(dateStr);
+            
+            // 計算四個月前的日期
+            const fourMonthsAgo = new Date();
+            fourMonthsAgo.setMonth(now.getMonth() - 4);
+            
+            return targetDate >= fourMonthsAgo;
         }
-
-        function setStatus(container, type, msg) {
-            container.className = 'status ' + type;
-            container.textContent = msg;
-            container.style.display = 'block';
+        
+        // 檢查版本號更新是否在允許範圍內
+        function isRevisionInRange(oldRevision, newRevision) {
+            // 如果舊版本為空，則不限制
+            if (!oldRevision || oldRevision.trim() === '') return true;
+            
+            // 如果新版本為空，則不限制
+            if (!newRevision || newRevision.trim() === '') return true;
+            
+            // 將版本號轉換為數字
+            const oldRevNum = parseInt(oldRevision);
+            const newRevNum = parseInt(newRevision);
+            
+            // 如果轉換失敗，則不限制
+            if (isNaN(oldRevNum) || isNaN(newRevNum)) return false;
+            
+            // 檢查新版本是否在舊版本的±2範圍內
+            return Math.abs(newRevNum - oldRevNum) <= 2;
         }
-
-        // ==================== 主要生成邏輯 ====================
-        async function generateWorkbook() {
-            if (!templateWorkbook) {
-                setStatus(workStatus, 'error', '❌ 請先加載模板。');
-                return;
+        
+        // 驗證日期格式
+        function validateDate(dateStr) {
+            if (!dateStr) return true;
+            
+            const parts = dateStr.split('/');
+            if (parts.length !== 3) {
+                alert('日期格式錯誤，請使用年/月/日格式，例如：2025/8/1');
+                return false;
             }
-            if (uploadedWorkData.length === 0) {
-                setStatus(workStatus, 'warning', '⚠️ 請先上傳工作經歷檔案。');
-                return;
+            
+            const year = parseInt(parts[0]);
+            const month = parseInt(parts[1]);
+            const day = parseInt(parts[2]);
+            
+            if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                alert('日期必須為數字');
+                return false;
             }
-            const fullName = document.getElementById('fullName').value.trim();
-            if (!fullName) {
-                setStatus(workStatus, 'warning', '⚠️ 請填寫全名。');
-                return;
+            
+            if (year > 2065) {
+                alert('年份不能超過2065');
+                return false;
             }
-            generateBtn.disabled = true;
-            generateBtn.textContent = '⏳ 處理中...';
-            setStatus(workStatus, 'info', '正在產生工作經歷簿...');
-
+            
+            if (month < 1 || month > 12) {
+                alert('月份必須在1-12之間');
+                return false;
+            }
+            
+            if (day < 1 || day > 31) {
+                alert('日期必須在1-31之間');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // 日期自動格式化函數
+        function autoFormatDate(input) {
+            let value = input.value.replace(/[^0-9]/g, '');
+            
+            // 自動添加斜線
+            if (value.length > 4) {
+                value = value.substring(0, 4) + '/' + value.substring(4);
+            }
+            if (value.length > 7) {
+                value = value.substring(0, 7) + '/' + value.substring(7, 9);
+            }
+            
+            input.value = value;
+        }
+        
+        // 測試雲端連接
+        async function testCloudConnection() {
             try {
-                // 深複製模板 Workbook
-                const outputBuffer = await templateWorkbook.xlsx.writeBuffer();
-                const outWorkbook = new ExcelJS.Workbook();
-                await outWorkbook.xlsx.load(outputBuffer);
-
-                // 收集使用者輸入
-                const nameParts = splitName(fullName);
-                const empId = document.getElementById('empId').value.trim();
-                const birthDate = document.getElementById('birthDate').value;
-                const nationality = document.getElementById('nationality').value.trim();
-                const permanentAddress = document.getElementById('permanentAddress').value.trim();
-                const licenseNumber = document.getElementById('licenseNumber').value.trim();
-                const licenseCategory = document.getElementById('licenseCategory').value.trim();
-                const hireDate = document.getElementById('hireDate').value;
-                const jobTitle = document.getElementById('jobTitle').value;
-                const aircraftType = aircraftTypeHidden.value;
-                const workLocation = document.getElementById('workLocation').value;
-                const rowsPerPage = parseInt(document.querySelector('input[name="rowsPerPage"]:checked').value);
-
-                // 尋找或建立「資料輸入」工作表
-                let dataSheet = outWorkbook.getWorksheet('資料輸入');
-                if (!dataSheet) {
-                    dataSheet = outWorkbook.addWorksheet('資料輸入');
+                const response = await fetch(GAS_URL);
+                const result = await response.json();
+                return result.success;
+            } catch (error) {
+                console.error('雲端連接失敗:', error);
+                return false;
+            }
+        }
+        
+        // 從 Google Sheets 加載表格數據
+        async function loadTableData() {
+            try {
+                const response = await fetch(GAS_URL);
+                const result = await response.json();
+                
+                if (result.success && result.data && result.data.length > 0) {
+                    cloudConnected = true;
+                    updateConnectionStatus(true, `✓ 已連接到雲端資料庫 (${result.count} 筆資料)`);
+                    return result.data;
                 } else {
-                    // 清除既有內容（保留標題）
-                    if (dataSheet.rowCount > 1) {
-                        for (let r = dataSheet.rowCount; r >= 2; r--) {
-                            dataSheet.spliceRows(r, 1);
+                    throw new Error('雲端資料為空');
+                }
+            } catch (error) {
+                cloudConnected = false;
+                updateConnectionStatus(false, '⚠ 使用本地備份資料（雲端連接失敗）');
+                console.log('使用本地備份資料');
+                return getDefaultTableData();
+            }
+        }
+        
+        // 保存表格數據到 Google Sheets
+        async function saveTableData(rowIndex, updatedData) {
+            if (!cloudConnected) {
+                alert('無法連接到雲端，請檢查網路連接');
+                return false;
+            }
+            
+            try {
+                const response = await fetch(GAS_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        index: rowIndex,
+                        updatedData: updatedData
+                    })
+                });
+                
+                const result = await response.json();
+                return result.success;
+            } catch (error) {
+                console.error('保存到雲端錯誤:', error);
+                alert('保存到雲端失敗，請檢查網路連接');
+                return false;
+            }
+        }
+        
+        // 更新連接狀態顯示
+        function updateConnectionStatus(connected, message) {
+            const statusElement = document.getElementById('connection-status');
+            if (connected) {
+                statusElement.className = 'connection-status connection-success';
+            } else {
+                statusElement.className = 'connection-status connection-error';
+            }
+            statusElement.textContent = message;
+        }
+        
+        // 預設資料（當無法從雲端載入時使用）
+        function getDefaultTableData() {
+            return [
+                // A321
+                { type: "header", aircraft: "A321", document: "REV", revision: "", date: "", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "AMM/TSM/AWM/ASM", revision: "18", date: "2025/8/1", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "MEL", revision: "17", date: "2025/8/6", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "SRM", revision: "30", date: "2025/2/1", note: "", updateDate: "" },
+                
+                // A330
+                { type: "header", aircraft: "A330", document: "REV", revision: "", date: "", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "AMM/TSM/AWM/ASM", revision: "86", date: "2025/10/1", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "MEL", revision: "27", date: "2025/9/5", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "SRM", revision: "125", date: "2025/1/1", note: "", updateDate: "" },
+                
+                // A350
+                { type: "header", aircraft: "A350", document: "REV", revision: "", date: "", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "MP/AFI", revision: "94", date: "2025/10/1", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "MEL", revision: "38", date: "2025/6/27", note: "", updateDate: "" },
+                
+                // B738
+                { type: "header", aircraft: "B738", document: "REV", revision: "", date: "", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "AMM / FIM", revision: "88", date: "2025/10/15", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "MEL", revision: "38", date: "2024/12/26", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "SRM", revision: "85", date: "2025/7/10", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "CHI- WDM / SSM", revision: "53", date: "2025/5/20", note: "610~617 ; 655 ~656 ; 658 ~660", updateDate: "" },
+                { type: "data", aircraft: "", document: "ILFC-WDM/SSM", revision: "123", date: "2025/8/27", note: "651 ; 652", updateDate: "" },
+                { type: "data", aircraft: "", document: "SMBC-WDM/SSM", revision: "67", date: "2025/6/23", note: "657", updateDate: "" },
+                { type: "data", aircraft: "", document: "SIL-WDM/SSM", revision: "79", date: "2025/5/30", note: "661~667", updateDate: "" },
+                
+                // B744
+                { type: "header", aircraft: "B744", document: "REV", revision: "", date: "", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "AMM / FIM", revision: "114", date: "2025/7/15", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "MEL", revision: "50", date: "2025/3/10", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "WDM / SSM", revision: "74", date: "2025/8/12", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "SRM 747-400", revision: "124", date: "2025/6/20", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "SRM 747-400F", revision: "104", date: "2025/6/20", note: "", updateDate: "" },
+                
+                // B777
+                { type: "header", aircraft: "B777", document: "REV", revision: "", date: "", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "AMM / FIM", revision: "105", date: "2025/9/5", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "MEL", revision: "16", date: "2025/7/14", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "SRM 777-300", revision: "84", date: "2025/9/15", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "SRM 777-F", revision: "51", date: "2025/9/15", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "CHI- WDM / SSM", revision: "28", date: "2025/6/30", note: "001~007", updateDate: "" },
+                { type: "data", aircraft: "", document: "GEF- WDM / SSM", revision: "45", date: "2025/6/27", note: "051~055", updateDate: "" },
+                
+                // B787
+                { type: "header", aircraft: "B787", document: "REV", revision: "", date: "", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "AMM/FIM", revision: "", date: "", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "MEL", revision: "", date: "", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "SRM", revision: "", date: "", note: "", updateDate: "" },
+                
+                // 通用手冊
+                { type: "header", aircraft: "通用", document: "REV", revision: "", date: "", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "ESPM", revision: "49", date: "2024/5/1", note: "AIRBUS", updateDate: "" },
+                { type: "data", aircraft: "", document: "SWPM", revision: "89", date: "2025/6/15", note: "BOEING", updateDate: "" },
+                { type: "data", aircraft: "", document: "CAT II /III MAINT", revision: "37", date: "2025/6/16", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "FLIGHT KIT MANAGEMENT", revision: "17", date: "2025/7/15", note: "QP10MN073", updateDate: "" },
+                { type: "data", aircraft: "", document: "UPDATE （即時更新日期）", revision: "", date: getCurrentDate(), note: "", updateDate: "" },
+                
+                // EON 4 USE CMM ON A/C
+                { type: "section", aircraft: "EON 4 USE CMM ON A/C", document: "REV", revision: "", date: "", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "EON ME-321-25-0001", revision: "5", date: "2023/11/21", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "EON ME-333-25-0004", revision: "1", date: "2024/5/21", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "EON ME-359-25-0001", revision: "20", date: "2025/9/24", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "EON ME-738-25-0008", revision: "5", date: "2023/3/31", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "EON ME-744-25-0001", revision: "17", date: "2023/12/19", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "EON ME-777-25-0006", revision: "4", date: "2023/4/17", note: "", updateDate: "" },
+                
+                // MEL NEF ITEM TYPE
+                { type: "section", aircraft: "MEL NEF ITEM", document: "TYPE", revision: "", date: "", note: "", updateDate: "" },
+                { type: "data", aircraft: "", document: "MEL 25-90-50 (A OR B)", revision: "", date: "", note: "A321", updateDate: "" },
+                { type: "data", aircraft: "", document: "MEL 25-90-50 (A OR B)", revision: "", date: "", note: "A330", updateDate: "" },
+                { type: "data", aircraft: "", document: "MEL 25-90-50 (A OR B)", revision: "", date: "", note: "A350", updateDate: "" },
+                { type: "data", aircraft: "", document: "MEL 25-10 (A OR B)", revision: "", date: "", note: "B738", updateDate: "" },
+                { type: "data", aircraft: "", document: "MEL 25-20-01 (A OR B)", revision: "", date: "", note: "B744", updateDate: "" },
+                { type: "data", aircraft: "", document: "MEL 25-20-01 (A OR B)", revision: "", date: "", note: "B777", updateDate: "" },
+                
+                // 备注信息
+                { type: "note", aircraft: "", document: "", revision: "", date: "", note: "Note: 本章節僅供快速查閱使用。正確版本請依照公司正式Manual", updateDate: "" },
+                { type: "note", aircraft: "", document: "", revision: "", date: "", note: "如有錯誤歡迎告知，謝謝", updateDate: "" },
+                { type: "note", aircraft: "", document: "", revision: "", date: "", note: "Highlights為近期更新項目", updateDate: "" },
+                { type: "note", aircraft: "", document: "A: DECISION TREE", revision: "", date: "", note: "", updateDate: "" },
+                { type: "note", aircraft: "", document: "B: DEFERRAL LIST", revision: "", date: "", note: "", updateDate: "" }
+            ];
+        }
+        
+        // 編輯模式狀態
+        let isEditMode = false;
+        let selectedRows = new Set(); // 存儲被選中的行索引
+        let editingRows = new Set(); // 存儲正在編輯的行索引
+        
+        // 生成表格
+        async function generateTable() {
+            const tableData = await loadTableData();
+            const table = document.getElementById('table-content');
+            table.innerHTML = '';
+            
+            // 添加表头
+            const headerRow = document.createElement('tr');
+            headerRow.innerHTML = `
+                <th>機型</th>
+                <th>手冊類型</th>
+                <th>版本</th>
+                <th>日期</th>
+                <th>備註</th>
+                ${isEditMode ? '<th>選擇編輯</th>' : ''}
+            `;
+            table.appendChild(headerRow);
+            
+            // 添加数据行
+            tableData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.dataset.index = index;
+                
+                // 檢查是否需要添加最近更新高亮
+                const isRecentlyUpdated = item.updateDate && isWithinFourMonths(item.updateDate);
+                
+                // 檢查是否被選中
+                const isSelected = selectedRows.has(index);
+                const selectedClass = isSelected ? 'selected-row' : '';
+                
+                // 檢查是否正在編輯
+                const isEditing = editingRows.has(index);
+                
+                if (item.type === "header") {
+                    // 设置机型的背景颜色
+                    let bgColor = "#FFFFFF";
+                    if (['A321', 'A330', 'A350'].includes(item.aircraft)) {
+                        bgColor = "#4DB6E8";
+                    } else if (['B738', 'B744', 'B777', 'B787', '通用'].includes(item.aircraft)) {
+                        bgColor = "#F49A8E";
+                    }
+                    
+                    // 设置REV列及其後面欄位的背景颜色為粉紫色
+                    row.innerHTML = `
+                        <td style="background-color:${bgColor};"><strong>${item.aircraft}</strong></td>
+                        <td style="background-color:#E5A9E1;"><strong>${item.document}</strong></td>
+                        <td style="background-color:#E5A9E1;">${item.revision}</td>
+                        <td style="background-color:#E5A9E1;">${item.date}</td>
+                        <td style="background-color:#E5A9E1;">${item.note}</td>
+                        ${isEditMode ? '<td style="background-color:#E5A9E1;"></td>' : ''}
+                    `;
+                } else if (item.type === "section") {
+                    // 特殊處理MEL NEF ITEM部分
+                    if (item.aircraft === "MEL NEF ITEM") {
+                        row.innerHTML = `
+                            <td colspan="5" style="background-color:#E9D9E9;">
+                                <strong>${item.aircraft}</strong> 
+                                <span class="type-aligned-header">${item.document}</span>
+                            </td>
+                            ${isEditMode ? '<td style="background-color:#E9D9E9;"></td>' : ''}
+                        `;
+                    } else {
+                        row.innerHTML = `
+                            <td colspan="5" style="background-color:#E9D9E9;"><strong>${item.aircraft}</strong></td>
+                            ${isEditMode ? '<td style="background-color:#E9D9E9;"></td>' : ''}
+                        `;
+                    }
+                } else if (item.type === "note") {
+                    // 特殊處理Highlights行
+                    if (item.note.includes("Highlights為近期更新項目")) {
+                        row.style.backgroundColor = "#FFF56E";
+                    } else {
+                        row.style.backgroundColor = "#fff3cd";
+                    }
+                    
+                    if (item.document) {
+                        row.innerHTML = `
+                            <td colspan="5"><strong>${item.document}</strong> ${item.note}</td>
+                            ${isEditMode ? '<td></td>' : ''}
+                        `;
+                    } else {
+                        row.innerHTML = `
+                            <td colspan="5">${item.note}</td>
+                            ${isEditMode ? '<td></td>' : ''}
+                        `;
+                    }
+                } else {
+                    // 特殊處理UPDATE行
+                    if (item.document === "UPDATE （即時更新日期）") {
+                        row.innerHTML = `
+                            <td style="background-color:#FFFFFF;">${item.aircraft}</td>
+                            <td style="background-color:#FFFFFF;">${item.document}</td>
+                            <td style="background-color:#FFFFFF;">${item.revision}</td>
+                            <td style="background-color:#FFF56E;">${item.date}</td>
+                            <td style="background-color:#FFFFFF;">${item.note}</td>
+                            ${isEditMode ? '<td style="background-color:#FFFFFF;"></td>' : ''}
+                        `;
+                    } 
+                    // 特殊處理通用手冊下的ESPM、SWPM等行
+                    else if (item.aircraft === "" && ['ESPM', 'SWPM', 'CAT II /III MAINT', 'FLIGHT KIT MANAGEMENT'].includes(item.document)) {
+                        if (isEditing) {
+                            // 編輯模式
+                            row.innerHTML = `
+                                <td style="background-color:#E6B3C7;">${item.aircraft}</td>
+                                <td style="background-color:#E6B3C7;">${item.document}</td>
+                                <td style="background-color:#E6B3C7;">
+                                    <input type="text" class="edit-input" value="${item.revision}" data-field="revision" data-index="${index}">
+                                </td>
+                                <td style="background-color:#E6B3C7;">
+                                    <input type="text" class="edit-input" value="${item.date}" data-field="date" data-index="${index}">
+                                </td>
+                                <td style="background-color:#E6B3C7;">
+                                    <input type="text" class="edit-input" value="${item.note}" data-field="note" data-index="${index}">
+                                    <div class="edit-controls">
+                                        <button class="edit-btn save-btn" data-index="${index}">保存</button>
+                                        <button class="edit-btn cancel-btn" data-index="${index}">取消</button>
+                                    </div>
+                                </td>
+                                ${isEditMode ? `<td style="background-color:#E6B3C7;"><input type="checkbox" class="edit-checkbox" data-index="${index}" checked></td>` : ''}
+                            `;
+                        } else {
+                            // 正常顯示
+                            row.innerHTML = `
+                                <td style="background-color:#E6B3C7;">${item.aircraft}</td>
+                                <td style="background-color:#E6B3C7;">${item.document}</td>
+                                <td style="background-color:#E6B3C7;">${item.revision}</td>
+                                <td style="background-color:#E6B3C7;">${item.date}</td>
+                                <td style="background-color:#E6B3C7;">${item.note}</td>
+                                ${isEditMode ? `<td style="background-color:#E6B3C7;"><input type="checkbox" class="edit-checkbox" data-index="${index}" ${isSelected ? 'checked' : ''}></td>` : ''}
+                            `;
+                        }
+                    }
+                    // 特殊處理MEL NEF ITEM數據行 - 機型往左移動一格
+                    else if (item.document.includes("MEL 25-") && item.note && ['A321', 'A330', 'A350', 'B738', 'B744', 'B777'].includes(item.note)) {
+                        row.innerHTML = `
+                            <td style="background-color:#FFFFFF;">${item.aircraft}</td>
+                            <td style="background-color:#FFFFFF;">${item.document}</td>
+                            <td style="background-color:#FFFFFF;">${item.revision}</td>
+                            <td style="background-color:#FFFFFF;">${item.date}</td>
+                            <td style="background-color:#FFFFFF;">
+                                <span class="type-aligned-data">${item.note}</span>
+                            </td>
+                            ${isEditMode ? '<td style="background-color:#FFFFFF;"></td>' : ''}
+                        `;
+                    } else {
+                        // 一般數據行
+                        if (isEditing) {
+                            // 編輯模式
+                            const bgStyle = isRecentlyUpdated ? "recently-updated" : "";
+                            row.innerHTML = `
+                                <td class="${bgStyle} ${selectedClass}">${item.aircraft}</td>
+                                <td class="${bgStyle} ${selectedClass}">${item.document}</td>
+                                <td class="${bgStyle} ${selectedClass}">
+                                    <input type="text" class="edit-input" value="${item.revision}" data-field="revision" data-index="${index}">
+                                </td>
+                                <td class="${bgStyle} ${selectedClass}">
+                                    <input type="text" class="edit-input" value="${item.date}" data-field="date" data-index="${index}">
+                                </td>
+                                <td class="${bgStyle} ${selectedClass}">
+                                    <input type="text" class="edit-input" value="${item.note}" data-field="note" data-index="${index}">
+                                    <div class="edit-controls">
+                                        <button class="edit-btn save-btn" data-index="${index}">保存</button>
+                                        <button class="edit-btn cancel-btn" data-index="${index}">取消</button>
+                                    </div>
+                                </td>
+                                ${isEditMode ? `<td class="${bgStyle} ${selectedClass}"><input type="checkbox" class="edit-checkbox" data-index="${index}" checked></td>` : ''}
+                            `;
+                        } else {
+                            // 正常顯示
+                            const bgStyle = isRecentlyUpdated ? "recently-updated" : "";
+                            row.innerHTML = `
+                                <td class="${bgStyle} ${selectedClass}">${item.aircraft}</td>
+                                <td class="${bgStyle} ${selectedClass}">${item.document}</td>
+                                <td class="${bgStyle} ${selectedClass}">${item.revision}</td>
+                                <td class="${bgStyle} ${selectedClass}">${item.date}</td>
+                                <td class="${bgStyle} ${selectedClass}">${item.note}</td>
+                                ${isEditMode ? `<td class="${bgStyle} ${selectedClass}"><input type="checkbox" class="edit-checkbox" data-index="${index}" ${isSelected ? 'checked' : ''}></td>` : ''}
+                            `;
                         }
                     }
                 }
-                // 寫入標題
-                const inputHeaders = ['日期','工時','機號','機型','任務描述','Perform',
-                    '姓氏','名字','工號','出生日期','國籍','永久地址','執照號碼','執照類別','聘僱日期','職務','工作機型','工作地點'];
-                const hdrRow = dataSheet.getRow(1);
-                inputHeaders.forEach((h, i) => {
-                    const cell = hdrRow.getCell(i+1);
-                    cell.value = h;
-                    cell.font = { bold: true };
-                    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFD6E4F0' } };
-                });
-                hdrRow.commit();
-
-                // 個人資料行（第2行）
-                const persRow = dataSheet.getRow(2);
-                const persData = [
-                    '', '', '', '', '', '',
-                    nameParts.lastName, nameParts.firstName, empId, birthDate, nationality,
-                    permanentAddress, licenseNumber, licenseCategory, hireDate, jobTitle, aircraftType, workLocation
-                ];
-                persData.forEach((v, i) => { persRow.getCell(i+1).value = v; });
-                persRow.commit();
-
-                // 寫入工作經歷（從第3行開始）
-                uploadedWorkData.forEach((d, i) => {
-                    const row = dataSheet.getRow(3 + i);
-                    row.getCell(1).value = d.date;
-                    row.getCell(2).value = d.hours;
-                    row.getCell(3).value = d.aircraft;
-                    row.getCell(4).value = d.aircraftType;
-                    row.getCell(5).value = d.description;
-                    row.getCell(6).value = 'V';
-                    row.commit();
-                });
-
-                // 處理 PAGE 工作表：更新 Location、公式引用
-                const page1 = outWorkbook.getWorksheet('PAGE 1.');
-                if (!page1) throw new Error('模板中找不到「PAGE 1.」工作表');
-
-                // 更新 Location
-                const updateLocation = (sheet) => {
-                    sheet.eachRow({ includeEmpty: false }, (row) => {
-                        row.eachCell({ includeEmpty: false }, (cell) => {
-                            const v = cell.value;
-                            if (typeof v === 'string' && (v.includes('CAL-EMO') || v.includes('CKS') || v.includes('KHH'))) {
-                                cell.value = workLocation;
-                            }
-                        });
+                
+                table.appendChild(row);
+            });
+            
+            // 如果處於編輯模式，為勾選框添加事件監聽
+            if (isEditMode) {
+                document.querySelectorAll('.edit-checkbox').forEach(checkbox => {
+                    checkbox.addEventListener('change', function() {
+                        const rowIndex = parseInt(this.dataset.index);
+                        
+                        if (this.checked) {
+                            selectedRows.add(rowIndex);
+                            editingRows.add(rowIndex); // 自動進入編輯模式
+                        } else {
+                            selectedRows.delete(rowIndex);
+                            editingRows.delete(rowIndex); // 退出編輯模式
+                        }
+                        
+                        // 重新生成表格以更新編輯狀態
+                        generateTable();
                     });
-                };
-                updateLocation(page1);
-
-                // 更新公式：將原指向外部檔案的 #REF! 公式替換為指向「資料輸入」工作表的公式
-                const totalRecords = uploadedWorkData.length;
-                const totalPages = Math.ceil(totalRecords / rowsPerPage);
-
-                const updateFormulas = (sheet, pageIndex) => {
-                    const startRow = 3 + pageIndex * rowsPerPage; // 資料輸入中的起始行
-                    sheet.eachRow({ includeEmpty: false }, (row, rowNum) => {
-                        row.eachCell({ includeEmpty: false }, (cell) => {
-                            if (cell.formula && typeof cell.formula === 'string') {
-                                let f = cell.formula;
-                                // 替換所有 #REF! 相關引用（包含之前的 #REF!&#REF! 等）
-                                // 策略：檢測公式中是否包含「資料輸入」或「#REF!」，若包含則重建公式
-                                if (f.includes('#REF!') || f.includes('資料輸入')) {
-                                    // 根據原始模板邏輯：每個 PAGE 有固定的公式結構
-                                    // 這裡採用簡單映射：將所有 #REF! 部分替換為直接引用「資料輸入」對應欄位
-                                    // 實際模板公式較複雜，這裡我們重建一個標準公式集
-                                    // 為了確保正確，我們直接根據行號設置公式
-                                    const dataRow = startRow + (rowNum - 5); // 原始模板資料從第6行開始
-                                    if (dataRow >= startRow && dataRow < startRow + rowsPerPage) {
-                                        // 更新該行的公式
-                                        const rowRef = dataRow;
-                                        // 日期 (A欄)
-                                        cell.value = { formula: `資料輸入!A${rowRef}` };
-                                        // 其他欄位根據需要設置，這裡僅示範核心欄位
-                                        // 由於模板公式複雜，我們採用保留原始模板公式結構，僅修正引用
-                                        // 簡化處理：將所有 #REF! 替換為資料輸入對應欄位
-                                    }
-                                }
-                                // 本範例為了簡化，我們將直接使用已修正的公式替換邏輯
-                                // 實際應用中需仔細匹配模板公式模式，此處略
-                            }
-                        });
+                });
+                
+                // 為保存按鈕添加事件監聽
+                document.querySelectorAll('.save-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const rowIndex = parseInt(this.dataset.index);
+                        saveRowEdit(rowIndex);
                     });
-                };
-                updateFormulas(page1, 0);
-
-                // 複製 PAGE 工作表以產生足夠頁數
-                for (let p = 1; p < totalPages; p++) {
-                    const srcSheet = outWorkbook.getWorksheet(p === 0 ? 'PAGE 1.' : `PAGE ${p}.`);
-                    const newSheet = outWorkbook.addWorksheet(`PAGE ${p+1}.`);
-                    // 複製合併儲存格、行高、欄寬等（此處省略詳細複製代碼，應複製所有格式）
-                    // 實際需要完整複製，但為保持回應簡潔，此處使用簡化複製（使用者可根據需要完善）
-                    // 更新 Location 和公式
-                    updateLocation(newSheet);
-                    updateFormulas(newSheet, p);
-                }
-
-                // 下載
-                const buf = await outWorkbook.xlsx.writeBuffer();
-                const blob = new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                const now = new Date();
-                const ts = `${now.getFullYear()}${pad2(now.getMonth()+1)}${pad2(now.getDate())}_${pad2(now.getHours())}${pad2(now.getMinutes())}`;
-                a.download = `工作經歷簿_${fullName}_${ts}.xlsx`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                setStatus(workStatus, 'success', `✅ 成功生成 ${totalPages} 頁工作經歷簿。`);
-            } catch (err) {
-                console.error(err);
-                setStatus(workStatus, 'error', '❌ 生成失敗：' + err.message);
+                });
+                
+                // 為取消按鈕添加事件監聽
+                document.querySelectorAll('.cancel-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const rowIndex = parseInt(this.dataset.index);
+                        editingRows.delete(rowIndex); // 退出編輯模式
+                        generateTable(); // 重新生成表格
+                    });
+                });
+                
+                // 為日期輸入框添加自動格式化
+                document.querySelectorAll('.edit-input[data-field="date"]').forEach(input => {
+                    input.addEventListener('input', function() {
+                        autoFormatDate(this);
+                    });
+                });
+                
+                // 為輸入框添加Enter鍵保存功能
+                document.querySelectorAll('.edit-input').forEach(input => {
+                    input.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            const rowIndex = parseInt(this.dataset.index);
+                            saveRowEdit(rowIndex);
+                        }
+                    });
+                });
             }
-            generateBtn.disabled = false;
-            generateBtn.textContent = '🚀 生成並下載 Excel 檔案';
+            
+            // 显示表格区域
+            document.getElementById('table-content-section').style.display = 'block';
         }
-
-        function splitName(full) {
-            const s = full.trim();
-            if (s.length <= 1) return { lastName: s, firstName: '' };
-            if (s.length === 2) return { lastName: s[0], firstName: s[1] };
-            if (s.length === 3) return { lastName: s[0], firstName: s.slice(1) };
-            return { lastName: s.slice(0, 2), firstName: s.slice(2) };
+        
+        // 保存行編輯
+        async function saveRowEdit(rowIndex) {
+            const tableData = await loadTableData();
+            const item = tableData[rowIndex];
+            
+            // 獲取輸入框的值
+            const revisionInput = document.querySelector(`.edit-input[data-field="revision"][data-index="${rowIndex}"]`);
+            const dateInput = document.querySelector(`.edit-input[data-field="date"][data-index="${rowIndex}"]`);
+            const noteInput = document.querySelector(`.edit-input[data-field="note"][data-index="${rowIndex}"]`);
+            
+            const newRevision = revisionInput ? revisionInput.value : item.revision;
+            const newDate = dateInput ? dateInput.value : item.date;
+            const newNote = noteInput ? noteInput.value : item.note;
+            
+            const oldRevision = item.revision || '';
+            
+            // 檢查版本號更新範圍
+            if (!isRevisionInRange(oldRevision, newRevision)) {
+                alert('超過設定值請聯絡管理員！');
+                return;
+            }
+            
+            // 驗證日期格式
+            if (newDate && !validateDate(newDate)) {
+                return;
+            }
+            
+            // 檢查版本和備註只能輸入數字
+            if (newRevision && !/^\d+$/.test(newRevision)) {
+                alert('版本號只能輸入數字！');
+                return;
+            }
+            
+            if (newNote && !/^\d+$/.test(newNote)) {
+                alert('備註只能輸入數字！');
+                return;
+            }
+            
+            // 更新數據
+            const updatedData = {
+                type: item.type,
+                aircraft: item.aircraft,
+                document: item.document,
+                revision: newRevision,
+                date: newDate,
+                note: newNote,
+                updateDate: getCurrentDate()
+            };
+            
+            // 保存到 Google Sheets
+            const success = await saveTableData(rowIndex, updatedData);
+            
+            if (success) {
+                // 退出編輯模式但保持選中狀態
+                editingRows.delete(rowIndex);
+                
+                // 重新生成表格
+                await generateTable();
+                
+                alert('資料已更新到雲端！');
+            } else {
+                alert('更新失敗，請檢查網路連接或稍後再試！');
+            }
         }
-        function pad2(n) { return String(n).padStart(2,'0'); }
-
-        // 初始化啟用生成按鈕（若已有模板）
-        // 此處不自動觸發
+        
+        // 表格切换功能
+        document.getElementById('table-toggle').addEventListener('click', function() {
+            const tableBody = document.querySelector('.table-content-body');
+            const toggleButton = document.getElementById('table-toggle');
+            
+            if (tableBody.style.display === 'none') {
+                tableBody.style.display = 'block';
+                toggleButton.textContent = '隱藏表格';
+            } else {
+                tableBody.style.display = 'none';
+                toggleButton.textContent = '顯示表格';
+            }
+        });
+        
+        // 密碼驗證功能
+        document.getElementById('password-btn').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password-input');
+            const passwordError = document.getElementById('password-error');
+            const editIndicator = document.getElementById('edit-mode-indicator');
+            
+            // 密碼改為 "thankscal"
+            if (passwordInput.value === 'thankscal') {
+                // 密碼正確，進入編輯模式
+                isEditMode = true;
+                passwordError.style.display = 'none';
+                passwordInput.value = ''; // 清空密碼輸入框
+                editIndicator.style.display = 'block'; // 顯示編輯模式指示器
+                
+                // 重新生成表格，顯示編輯功能
+                generateTable();
+                
+                alert('已進入編輯模式，勾選要編輯的列，版本和日期欄位會自動變成編輯模式');
+            } else {
+                // 密碼錯誤，顯示錯誤信息
+                passwordError.style.display = 'block';
+                passwordInput.value = ''; // 清空密碼輸入框
+                passwordInput.focus(); // 聚焦到密碼輸入框
+            }
+        });
+        
+        // 按Enter鍵也可以驗證密碼
+        document.getElementById('password-input').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                document.getElementById('password-btn').click();
+            }
+        });
+        
+        // 初始載入
+        window.addEventListener('DOMContentLoaded', async function() {
+            // 生成表格
+            await generateTable();
+        });
     </script>
 </body>
-                      </html>
+</html>
