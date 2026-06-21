@@ -322,22 +322,23 @@
 
         // ---------- 載入資料 ----------
         async function loadTableData() {
-            try {
-                const data = await fetchDataFromGitHub();
-                if (data && Array.isArray(data) && data.length > 0) {
-                    githubConnected = true;
-                    updateConnectionStatus(true, `✓ 已連接 GitHub 雲端 (${data.length} 筆資料)`);
-                    return data;
-                } else {
-                    throw new Error('無資料或格式錯誤');
-                }
-            } catch (error) {
-                githubConnected = false;
-                updateConnectionStatus(false, '⚠ 使用本地預設資料（讀取 data.json 失敗）');
-                console.warn('使用預設資料', error);
-                return getDefaultTableData();
-            }
+    try {
+        const data = await fetchDataFromGitHub();
+        if (data && Array.isArray(data.manuals) && data.manuals.length > 0) {
+            githubConnected = true;
+            updateConnectionStatus(true, `✓ 已連接 GitHub 雲端 (${data.manuals.length} 筆資料)`);
+            return data.manuals;   // ← 回傳 manuals 陣列
+        } else {
+            throw new Error('無資料或格式錯誤');
         }
+    } catch (error) {
+        githubConnected = false;
+        updateConnectionStatus(false, '⚠ 使用本地預設資料（讀取 data.json 失敗）');
+        console.warn('使用預設資料', error);
+        return getDefaultTableData();
+    }
+}
+
 
         // ---------- 生成表格 ----------
         async function generateTable() {
