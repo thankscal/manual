@@ -1,0 +1,32 @@
+name: Update Manual Data
+
+on:
+  # 接受前端觸發
+  workflow_dispatch:
+    inputs:
+      data:
+        description: 'JSON 表格資料'
+        required: true
+        type: string
+
+jobs:
+  update-json:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # 允許寫入倉庫內容
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Write data to data.json
+        run: |
+          # 將輸入的 JSON 字串寫入檔案（處理特殊字元）
+          printf '%s' '${{ github.event.inputs.data }}' > data.json
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          git diff --cached --quiet || git commit -m "Update manual data from web"
+          git push
