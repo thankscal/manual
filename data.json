@@ -1,1 +1,97 @@
-{"message":"Hello from web"}
+{"message":"Hello from web"}{
+  "update": "2026/06/21",
+  "manuals": [
+    {
+      "aircraft": "A321",
+      "revision": "REV",
+      "docs": [
+        { "type": "AMM/TSM/AWM/ASM", "version": "18", "date": "2025/8/1" },
+        { "type": "MEL", "version": "17", "date": "2025/8/6" },
+        { "type": "SRM", "version": "30", "date": "2025/2/1" }
+      ]
+    },
+    {
+      "aircraft": "A330",
+      "revision": "REV",
+      "docs": [
+        { "type": "AMM/TSM/AWM/ASM", "version": "86", "date": "2025/10/1" },
+        { "type": "MEL", "version": "27", "date": "2025/9/5" },
+        { "type": "SRM", "version": "125", "date": "2025/1/1" }
+      ]
+    },
+    {
+      "aircraft": "A350",
+      "revision": "REV",
+      "docs": [
+        { "type": "MP/AFI", "version": "94", "date": "2025/10/1" },
+        { "type": "MEL", "version": "38", "date": "2025/6/27" }
+      ]
+    },
+    {
+      "aircraft": "B738",
+      "revision": "REV",
+      "docs": [
+        { "type": "AMM/FIM", "version": "88", "date": "2025/10/15" },
+        { "type": "MEL", "version": "38", "date": "2024/12/26" },
+        { "type": "SRM", "version": "85", "date": "2025/7/10" },
+        { "type": "CHI-WDM/SSM", "version": "53", "date": "2025/5/20", "note": "610~617 ; 655~656 ; 658~660" },
+        { "type": "ILFC-WDM/SSM", "version": "123", "date": "2025/8/27", "note": "651 ; 652" },
+        { "type": "SMBC-WDM/SSM", "version": "67", "date": "2025/6/23", "note": "657" },
+        { "type": "SIL-WDM/SSM", "version": "79", "date": "2025/5/30", "note": "661~667" }
+      ]
+    },
+    {
+      "aircraft": "B744",
+      "revision": "REV",
+      "docs": [
+        { "type": "AMM/FIM", "version": "114", "date": "2025/7/15" },
+        { "type": "MEL", "version": "50", "date": "2025/3/10" },
+        { "type": "WDM/SSM", "version": "74", "date": "2025/8/12" },
+        { "type": "SRM 747-400", "version": "124", "date": "2025/6/20" },
+        { "type": "SRM 747-400F", "version": "104", "date": "2025/6/20" }
+      ]
+    },
+    {
+      "aircraft": "B777",
+      "revision": "REV",
+      "docs": [
+        { "type": "AMM/FIM", "version": "105", "date": "2025/9/5" },
+        { "type": "MEL", "version": "16", "date": "2025/7/14" },
+        { "type": "SRM 777-300", "version": "84", "date": "2025/9/15" },
+        { "type": "SRM 777-F", "version": "51", "date": "2025/9/15" },
+        { "type": "CHI-WDM/SSM", "version": "28", "date": "2025/6/30", "note": "001~007" },
+        { "type": "GEF-WDM/SSM", "version": "45", "date": "2025/6/27", "note": "051~055" }
+      ]
+    },
+    {
+      "aircraft": "B787",
+      "revision": "REV",
+      "docs": [
+        { "type": "AMM/FIM", "version": "", "date": "" },
+        { "type": "MEL", "version": "", "date": "" },
+        { "type": "SRM", "version": "", "date": "" }
+      ]
+    },
+    {
+      "aircraft": "通用",
+      "revision": "REV",
+      "docs": [
+        { "type": "ESPM", "version": "49", "date": "2024/5/1", "note": "AIRBUS" },
+        { "type": "SWPM", "version": "89", "date": "2025/6/15", "note": "BOEING" },
+        { "type": "CAT II/III MAINT", "version": "37", "date": "2025/6/16" },
+        { "type": "FLIGHT KIT MANAGEMENT", "version": "17", "date": "2025/7/15", "note": "QP10MN073" }
+      ]
+    },
+    {
+      "aircraft": "EON",
+      "docs": [
+        { "type": "ME-321-25-0001", "version": "5", "date": "2023/11/21" },
+        { "type": "ME-333-25-0004", "version": "1", "date": "2024/5/21" },
+        { "type": "ME-359-25-0001", "version": "20", "date": "2025/9/24" },
+        { "type": "ME-738-25-0008", "version": "5", "date": "2023/3/31" },
+        { "type": "ME-744-25-0001", "version": "17", "date": "2023/12/19" },
+        { "type": "ME-777-25-0006", "version": "4", "date": "2023/4/17" }
+      ]
+    }
+  ]
+}
