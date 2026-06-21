@@ -3,349 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>手冊資訊 - 雲端版本</title>
+    <title>手冊資訊 - GitHub 雲端版</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f8f8;
-            padding: 15px;
-            color: #333;
-            line-height: 1.5;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .main-title {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 10px;
-            font-size: 1.5em;
-        }
-        
-        .acknowledgment {
-            text-align: center;
-            color: #7f8c8d;
-            font-size: 0.8em;
-            margin-bottom: 15px;
-            font-style: italic;
-        }
-        
-        .disclaimer-container {
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            border-left: 4px solid #e74c3c;
-        }
-        
-        .disclaimer-title {
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: #e74c3c;
-            font-size: 0.85em;
-        }
-        
-        .disclaimer-content {
-            font-size: 0.75em;
-            color: #555;
-            line-height: 1.6;
-        }
-        
-        .disclaimer-content p {
-            margin-bottom: 8px;
-            text-align: justify;
-        }
-        
-        .disclaimer-content p:last-child {
-            margin-bottom: 0;
-        }
-        
-        .time-section {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .time-card {
-            border-radius: 5px;
-            padding: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            min-height: 80px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .card-title {
-            font-size: 0.9em;
-            font-weight: bold;
-            margin-bottom: 6px;
-            color: #2c3e50;
-        }
-        
-        .time-display {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .time-item {
-            margin: 3px 0;
-        }
-        
-        .time-label {
-            font-size: 0.75em;
-            color: #7f8c8d;
-            font-weight: bold;
-        }
-        
-        .time-value {
-            font-size: 0.95em;
-            font-weight: bold;
-        }
-        
+        /* ===== 完整樣式（與原版相同） ===== */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Arial', sans-serif; background-color: #f8f8f8; padding: 15px; color: #333; line-height: 1.5; display: flex; flex-direction: column; min-height: 100vh; }
+        .container { max-width: 1200px; margin: 0 auto; flex: 1; display: flex; flex-direction: column; }
+        .main-title { text-align: center; color: #2c3e50; margin-bottom: 10px; font-size: 1.5em; }
+        .acknowledgment { text-align: center; color: #7f8c8d; font-size: 0.8em; margin-bottom: 15px; font-style: italic; }
+        .disclaimer-container { background-color: #fff; border-radius: 8px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 4px solid #e74c3c; }
+        .disclaimer-title { font-weight: bold; margin-bottom: 8px; color: #e74c3c; font-size: 0.85em; }
+        .disclaimer-content { font-size: 0.75em; color: #555; line-height: 1.6; }
+        .disclaimer-content p { margin-bottom: 8px; text-align: justify; }
+        .disclaimer-content p:last-child { margin-bottom: 0; }
+        .time-section { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 20px; }
+        .time-card { border-radius: 5px; padding: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); min-height: 80px; display: flex; flex-direction: column; justify-content: center; }
+        .card-title { font-size: 0.9em; font-weight: bold; margin-bottom: 6px; color: #2c3e50; }
+        .time-display { display: flex; flex-direction: column; }
+        .time-item { margin: 3px 0; }
+        .time-label { font-size: 0.75em; color: #7f8c8d; font-weight: bold; }
+        .time-value { font-size: 0.95em; font-weight: bold; }
         .card-1 { background-color: #fff9c4; }
         .card-2 { background-color: #c8e6c9; }
         .card-3 { background-color: #fff9c4; }
         .card-4 { background-color: #c8e6c9; }
         .card-5 { background-color: #fff9c4; }
-        
-        .table-content-section {
-            margin: 20px 0;
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            display: block;
-        }
-        
-        .table-content-header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 12px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .table-content-title {
-            font-weight: bold;
-            font-size: 1.1em;
-        }
-        
-        .table-content-toggle {
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            font-size: 0.9em;
-        }
-        
-        .table-content-body {
-            max-height: 500px;
-            overflow-y: auto;
-        }
-        
-        .table-content-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .table-content-table th {
-            background-color: #f2f2f2;
-            padding: 10px 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-            font-size: 0.85em;
-            position: sticky;
-            top: 0;
-        }
-        
-        .table-content-table td {
-            padding: 8px;
-            border-bottom: 1px solid #eee;
-            font-size: 0.8em;
-            vertical-align: top;
-            position: relative;
-        }
-        
-        .table-content-table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        
-        .table-content-table tr:hover {
-            background-color: #f0f7ff;
-        }
-        
-        .password-section {
-            margin-top: auto;
-            padding: 15px;
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        
-        .password-input {
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            margin-right: 10px;
-            width: 200px;
-        }
-        
-        .password-btn {
-            padding: 8px 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s;
-        }
-        
-        .password-btn:hover {
-            background-color: #45a049;
-        }
-        
-        .password-error {
-            color: #e74c3c;
-            margin-top: 10px;
-            font-size: 0.9em;
-            display: none;
-        }
-        
-        .type-aligned-header {
-            margin-left: 280px;
-        }
-        
-        .type-aligned-data {
-            margin-left: -120px;
-            display: inline-block;
-            width: 160px;
-            text-align: left;
-        }
-        
-        .recently-updated {
-            background-color: #FFF56E !important;
-            transition: background-color 0.3s ease;
-        }
-        
-        .editable-cell {
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .edit-input {
-            width: 100%;
-            padding: 4px;
-            border: 1px solid #3498db;
-            border-radius: 3px;
-            font-size: 0.8em;
-        }
-        
-        .edit-checkbox {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-        
-        .edit-controls {
-            display: flex;
-            gap: 5px;
-            margin-top: 5px;
-        }
-        
-        .edit-btn {
-            padding: 3px 8px;
-            font-size: 0.7em;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-        
-        .save-btn {
-            background-color: #2ecc71;
-            color: white;
-        }
-        
-        .cancel-btn {
-            background-color: #e74c3c;
-            color: white;
-        }
-        
-        .edit-mode-indicator {
-            background-color: #e8f4fd;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            text-align: center;
-            font-weight: bold;
-            color: #2c3e50;
-            border: 1px solid #3498db;
-        }
-        
-        .selected-row {
-            background-color: #e8f4fd !important;
-        }
-        
-        .connection-status {
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            text-align: center;
-            font-weight: bold;
-        }
-        
-        .connection-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .connection-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        @media (max-width: 1024px) {
-            .time-section { grid-template-columns: repeat(3, 1fr); }
-        }
-        
-        @media (max-width: 768px) {
-            .time-section { grid-template-columns: repeat(2, 1fr); }
-            .type-aligned-header { margin-left: 210px; }
-            .type-aligned-data { margin-left: -90px; width: 120px; }
-        }
-        
-        @media (max-width: 480px) {
-            .time-section { grid-template-columns: 1fr; }
-            .type-aligned-header { margin-left: 120px; }
-            .type-aligned-data { margin-left: -60px; width: 80px; }
-        }
+        .table-content-section { margin: 20px 0; background-color: white; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); overflow: hidden; display: block; }
+        .table-content-header { background-color: #2c3e50; color: white; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; }
+        .table-content-title { font-weight: bold; font-size: 1.1em; }
+        .table-content-toggle { background: none; border: none; color: white; cursor: pointer; font-size: 0.9em; }
+        .table-content-body { max-height: 500px; overflow-y: auto; }
+        .table-content-table { width: 100%; border-collapse: collapse; }
+        .table-content-table th { background-color: #f2f2f2; padding: 10px 8px; text-align: left; border-bottom: 1px solid #ddd; font-size: 0.85em; position: sticky; top: 0; }
+        .table-content-table td { padding: 8px; border-bottom: 1px solid #eee; font-size: 0.8em; vertical-align: top; }
+        .table-content-table tr:nth-child(even) { background-color: #f9f9f9; }
+        .table-content-table tr:hover { background-color: #f0f7ff; }
+        .password-section { margin-top: auto; padding: 15px; background-color: white; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); text-align: center; }
+        .password-input { padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; margin-right: 10px; width: 200px; }
+        .password-btn { padding: 8px 16px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; }
+        .password-btn:hover { background-color: #45a049; }
+        .password-error { color: #e74c3c; margin-top: 10px; font-size: 0.9em; display: none; }
+        .type-aligned-header { margin-left: 280px; }
+        .type-aligned-data { margin-left: -120px; display: inline-block; width: 160px; text-align: left; }
+        .recently-updated { background-color: #FFF56E !important; }
+        .edit-input { width: 100%; padding: 4px; border: 1px solid #3498db; border-radius: 3px; font-size: 0.8em; }
+        .edit-checkbox { width: 18px; height: 18px; cursor: pointer; }
+        .edit-controls { display: flex; gap: 5px; margin-top: 5px; }
+        .edit-btn { padding: 3px 8px; font-size: 0.7em; border: none; border-radius: 3px; cursor: pointer; }
+        .save-btn { background-color: #2ecc71; color: white; }
+        .cancel-btn { background-color: #e74c3c; color: white; }
+        .edit-mode-indicator { background-color: #e8f4fd; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center; font-weight: bold; color: #2c3e50; border: 1px solid #3498db; }
+        .selected-row { background-color: #e8f4fd !important; }
+        .connection-status { padding: 10px; margin: 10px 0; border-radius: 5px; text-align: center; font-weight: bold; }
+        .connection-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .connection-error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        @media (max-width: 1024px) { .time-section { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 768px) { .time-section { grid-template-columns: repeat(2, 1fr); } .type-aligned-header { margin-left: 210px; } .type-aligned-data { margin-left: -90px; width: 120px; } }
+        @media (max-width: 480px) { .time-section { grid-template-columns: 1fr; } .type-aligned-header { margin-left: 120px; } .type-aligned-data { margin-left: -60px; width: 80px; } }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="main-title">手冊資訊 - 雲端版本</h1>
+        <h1 class="main-title">手冊資訊 - GitHub 雲端版</h1>
         <p class="acknowledgment">*特別感謝 吳30cm默默付出</p>
         
         <div class="disclaimer-container">
@@ -358,99 +77,49 @@
             </div>
         </div>
 
-        <div id="connection-status" class="connection-status">
-            正在連接雲端資料庫...
-        </div>
+        <div id="connection-status" class="connection-status">正在連接 GitHub 雲端...</div>
         
-        <!-- 時間顯示部分 -->
+        <!-- 時間顯示區塊 -->
         <div class="time-section">
-            <!-- 第一欄：台灣時間和UTC時間 -->
             <div class="time-card card-1">
                 <div class="card-title">當前時間</div>
                 <div class="time-display">
-                    <div class="time-item">
-                        <div class="time-label">台灣時間</div>
-                        <div class="time-value" id="taiwan-time">--:--:--</div>
-                    </div>
-                    <div class="time-item">
-                        <div class="time-label">星期</div>
-                        <div class="time-value" id="taiwan-day">--</div>
-                    </div>
-                    <div class="time-item">
-                        <div class="time-label">UTC時間</div>
-                        <div class="time-value" id="utc-time">--:--:--</div>
-                    </div>
-                    <div class="time-item">
-                        <div class="time-label">虎航/越南 UTC</div>
-                        <div class="time-value" id="tigerair-utc">--:--:--</div>
-                    </div>
+                    <div class="time-item"><div class="time-label">台灣時間</div><div class="time-value" id="taiwan-time">--:--:--</div></div>
+                    <div class="time-item"><div class="time-label">星期</div><div class="time-value" id="taiwan-day">--</div></div>
+                    <div class="time-item"><div class="time-label">UTC時間</div><div class="time-value" id="utc-time">--:--:--</div></div>
+                    <div class="time-item"><div class="time-label">虎航/越南 UTC</div><div class="time-value" id="tigerair-utc">--:--:--</div></div>
                 </div>
             </div>
-            
-            <!-- 第二欄：CAT B -->
             <div class="time-card card-2">
                 <div class="card-title">CAT B</div>
-                <div class="time-display">
-                    <div class="time-item">
-                        <div class="time-label">3天後</div>
-                        <div class="time-value" id="plus3-b">--</div>
-                    </div>
-                </div>
+                <div class="time-display"><div class="time-item"><div class="time-label">3天後</div><div class="time-value" id="plus3-b">--</div></div></div>
             </div>
-            
-            <!-- 第三欄：CAT C -->
             <div class="time-card card-3">
                 <div class="card-title">CAT C</div>
-                <div class="time-display">
-                    <div class="time-item">
-                        <div class="time-label">10天後</div>
-                        <div class="time-value" id="plus10-c">--</div>
-                    </div>
-                </div>
+                <div class="time-display"><div class="time-item"><div class="time-label">10天後</div><div class="time-value" id="plus10-c">--</div></div></div>
             </div>
-            
-            <!-- 第四欄：CAT D -->
             <div class="time-card card-4">
                 <div class="card-title">CAT D / 虎航NEF</div>
-                <div class="time-display">
-                    <div class="time-item">
-                        <div class="time-label">120天後</div>
-                        <div class="time-value" id="plus120-d">--</div>
-                    </div>
-                </div>
+                <div class="time-display"><div class="time-item"><div class="time-label">120天後</div><div class="time-value" id="plus120-d">--</div></div></div>
             </div>
-            
-            <!-- 第五欄：180天後 -->
             <div class="time-card card-5">
                 <div class="card-title">180天後</div>
-                <div class="time-display">
-                    <div class="time-item">
-                        <div class="time-label">日期</div>
-                        <div class="time-value" id="plus180">--</div>
-                    </div>
-                </div>
+                <div class="time-display"><div class="time-item"><div class="time-label">日期</div><div class="time-value" id="plus180">--</div></div></div>
             </div>
         </div>
         
-        <!-- 編輯模式指示器 -->
-        <div class="edit-mode-indicator" id="edit-mode-indicator" style="display: none;">
-            編輯模式已啟用 - 勾選要編輯的列，版本和日期欄位會自動變成編輯模式
-        </div>
+        <div class="edit-mode-indicator" id="edit-mode-indicator" style="display: none;">編輯模式已啟用 - 勾選要編輯的列，版本和日期欄位會自動變成編輯模式</div>
         
-        <!-- 表格内容显示区域 -->
         <div class="table-content-section" id="table-content-section">
             <div class="table-content-header">
                 <div class="table-content-title">手冊表格內容</div>
                 <button class="table-content-toggle" id="table-toggle">隱藏表格</button>
             </div>
             <div class="table-content-body">
-                <table class="table-content-table" id="table-content">
-                    <!-- 表格内容将通过JavaScript动态生成 -->
-                </table>
+                <table class="table-content-table" id="table-content"></table>
             </div>
         </div>
         
-        <!-- 密碼保護區域 -->
         <div class="password-section">
             <h2>表格編輯區域（需要密碼）</h2>
             <div style="margin: 15px 0;">
@@ -462,289 +131,142 @@
     </div>
 
     <script>
-        // === 請替換為您的新部署 URL ===
-        const GAS_URL = '您的新部署URL放在這裡';
-        // =================================
-        
-        // 連接狀態
-        let cloudConnected = false;
-        
-        // 時間更新功能
+        // ================================================================
+        //  🔧 設定區（已填入你的 GitHub 資訊和 Cloudflare Worker URL）
+        // ================================================================
+        const REPO_OWNER   = 'thankscal';
+        const REPO_NAME    = 'MANUAL';
+        const WORKFLOW_FILE = 'updata-manual.yml';   // 請確認檔名正確
+        const BRANCH       = 'main';
+        // ✅ 後端 Proxy 網址（你的 Cloudflare Worker）
+        const PROXY_URL    = 'https://manual-proxy.calcch807.workers.dev';
+        // ================================================================
+
+        // ---------- 全域變數 ----------
+        let tableData = [];
+        let isEditMode = false;
+        let selectedRows = new Set();
+        let editingRows = new Set();
+        let githubConnected = false;
+
+        // ---------- 時間更新 ----------
         function updateTime() {
             const now = new Date();
-            
-            // 台灣時間 (UTC+8)
-            const taiwanTime = now.toLocaleString('zh-TW', { 
-                timeZone: 'Asia/Taipei',
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            });
-            
-            // 台灣時間星期幾
-            const taiwanDay = now.toLocaleString('zh-TW', { 
-                timeZone: 'Asia/Taipei',
-                weekday: 'long'
-            });
-            
-            // UTC時間 (年/月/日 時間)
-            const utcDate = now.toLocaleString('zh-TW', {
-                timeZone: 'UTC',
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            });
-            
-            // 虎航/越南 UTC時間 (日/月/年 時間)
-            const tigerairUTCDate = now.toLocaleString('en-GB', {
-                timeZone: 'UTC',
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            }).replace(',', '');
-            
-            // 更新第一欄
-            document.getElementById('taiwan-time').textContent = taiwanTime;
-            document.getElementById('taiwan-day').textContent = taiwanDay;
-            document.getElementById('utc-time').textContent = utcDate;
-            document.getElementById('tigerair-utc').textContent = tigerairUTCDate;
-            
-            // 日期格式化函數
-            function formatDate(date) {
-                return date.toLocaleDateString('zh-TW', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit'
-                });
-            }
-            
-            // 更新CAT B
-            const plus3 = new Date(now);
-            plus3.setDate(now.getDate() + 3);
-            document.getElementById('plus3-b').textContent = formatDate(plus3);
-            
-            // 更新CAT C
-            const plus10 = new Date(now);
-            plus10.setDate(now.getDate() + 10);
-            document.getElementById('plus10-c').textContent = formatDate(plus10);
-            
-            // 更新CAT D
-            const plus120 = new Date(now);
-            plus120.setDate(now.getDate() + 120);
-            document.getElementById('plus120-d').textContent = formatDate(plus120);
-            
-            // 更新180天後
-            const plus180 = new Date(now);
-            plus180.setDate(now.getDate() + 180);
-            document.getElementById('plus180').textContent = formatDate(plus180);
+            document.getElementById('taiwan-time').textContent = now.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+            document.getElementById('taiwan-day').textContent = now.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei', weekday: 'long' });
+            document.getElementById('utc-time').textContent = now.toLocaleString('zh-TW', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+            document.getElementById('tigerair-utc').textContent = now.toLocaleString('en-GB', { timeZone: 'UTC', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).replace(',', '');
+            const fmt = d => d.toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' });
+            const d3 = new Date(now); d3.setDate(now.getDate()+3); document.getElementById('plus3-b').textContent = fmt(d3);
+            const d10 = new Date(now); d10.setDate(now.getDate()+10); document.getElementById('plus10-c').textContent = fmt(d10);
+            const d120 = new Date(now); d120.setDate(now.getDate()+120); document.getElementById('plus120-d').textContent = fmt(d120);
+            const d180 = new Date(now); d180.setDate(now.getDate()+180); document.getElementById('plus180').textContent = fmt(d180);
         }
-        
-        // 初始更新
         updateTime();
-        
-        // 每秒更新一次時間
         setInterval(updateTime, 1000);
-        
-        // 獲取當前日期（用於更新日期）
+
         function getCurrentDate() {
             const now = new Date();
-            return now.toLocaleDateString('zh-TW', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit'
-            });
+            return now.toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' });
         }
-        
-        // 檢查日期是否在四個月內
         function isWithinFourMonths(dateStr) {
             if (!dateStr) return false;
-            
-            const now = new Date();
-            const targetDate = new Date(dateStr);
-            
-            // 計算四個月前的日期
-            const fourMonthsAgo = new Date();
-            fourMonthsAgo.setMonth(now.getMonth() - 4);
-            
-            return targetDate >= fourMonthsAgo;
+            const now = new Date(), target = new Date(dateStr);
+            const fourMonthsAgo = new Date(); fourMonthsAgo.setMonth(now.getMonth() - 4);
+            return target >= fourMonthsAgo;
         }
-        
-        // 檢查版本號更新是否在允許範圍內
-        function isRevisionInRange(oldRevision, newRevision) {
-            // 如果舊版本為空，則不限制
-            if (!oldRevision || oldRevision.trim() === '') return true;
-            
-            // 如果新版本為空，則不限制
-            if (!newRevision || newRevision.trim() === '') return true;
-            
-            // 將版本號轉換為數字
-            const oldRevNum = parseInt(oldRevision);
-            const newRevNum = parseInt(newRevision);
-            
-            // 如果轉換失敗，則不限制
-            if (isNaN(oldRevNum) || isNaN(newRevNum)) return false;
-            
-            // 檢查新版本是否在舊版本的±2範圍內
-            return Math.abs(newRevNum - oldRevNum) <= 2;
+        function isRevisionInRange(oldRev, newRev) {
+            if (!oldRev || !newRev) return true;
+            const oldNum = parseInt(oldRev), newNum = parseInt(newRev);
+            if (isNaN(oldNum) || isNaN(newNum)) return false;
+            return Math.abs(newNum - oldNum) <= 2;
         }
-        
-        // 驗證日期格式
         function validateDate(dateStr) {
             if (!dateStr) return true;
-            
             const parts = dateStr.split('/');
-            if (parts.length !== 3) {
-                alert('日期格式錯誤，請使用年/月/日格式，例如：2025/8/1');
-                return false;
-            }
-            
-            const year = parseInt(parts[0]);
-            const month = parseInt(parts[1]);
-            const day = parseInt(parts[2]);
-            
-            if (isNaN(year) || isNaN(month) || isNaN(day)) {
-                alert('日期必須為數字');
-                return false;
-            }
-            
-            if (year > 2065) {
-                alert('年份不能超過2065');
-                return false;
-            }
-            
-            if (month < 1 || month > 12) {
-                alert('月份必須在1-12之間');
-                return false;
-            }
-            
-            if (day < 1 || day > 31) {
-                alert('日期必須在1-31之間');
-                return false;
-            }
-            
+            if (parts.length !== 3) { alert('日期格式錯誤，請使用年/月/日格式，例如：2025/8/1'); return false; }
+            const y = parseInt(parts[0]), m = parseInt(parts[1]), d = parseInt(parts[2]);
+            if (isNaN(y)||isNaN(m)||isNaN(d)) { alert('日期必須為數字'); return false; }
+            if (y > 2065) { alert('年份不能超過2065'); return false; }
+            if (m<1||m>12) { alert('月份必須在1-12之間'); return false; }
+            if (d<1||d>31) { alert('日期必須在1-31之間'); return false; }
             return true;
         }
-        
-        // 日期自動格式化函數
         function autoFormatDate(input) {
-            let value = input.value.replace(/[^0-9]/g, '');
-            
-            // 自動添加斜線
-            if (value.length > 4) {
-                value = value.substring(0, 4) + '/' + value.substring(4);
-            }
-            if (value.length > 7) {
-                value = value.substring(0, 7) + '/' + value.substring(7, 9);
-            }
-            
-            input.value = value;
+            let v = input.value.replace(/[^0-9]/g, '');
+            if (v.length > 4) v = v.substring(0,4)+'/'+v.substring(4);
+            if (v.length > 7) v = v.substring(0,7)+'/'+v.substring(7,9);
+            input.value = v;
         }
-        
-        // 測試雲端連接
-        async function testCloudConnection() {
+
+        // ---------- GitHub API 讀取 (直接抓 raw) ----------
+        async function fetchDataFromGitHub() {
+            const url = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/data.json`;
             try {
-                const response = await fetch(GAS_URL);
-                const result = await response.json();
-                return result.success;
-            } catch (error) {
-                console.error('雲端連接失敗:', error);
-                return false;
-            }
-        }
-        
-        // 從 Google Sheets 加載表格數據
-        async function loadTableData() {
-            try {
-                const response = await fetch(GAS_URL);
-                const result = await response.json();
-                
-                if (result.success && result.data && result.data.length > 0) {
-                    cloudConnected = true;
-                    updateConnectionStatus(true, `✓ 已連接到雲端資料庫 (${result.count} 筆資料)`);
-                    return result.data;
-                } else {
-                    throw new Error('雲端資料為空');
+                const resp = await fetch(url);
+                if (!resp.ok) {
+                    if (resp.status === 404) return null;
+                    throw new Error(`HTTP ${resp.status}`);
                 }
+                const text = await resp.text();
+                return JSON.parse(text);
             } catch (error) {
-                cloudConnected = false;
-                updateConnectionStatus(false, '⚠ 使用本地備份資料（雲端連接失敗）');
-                console.log('使用本地備份資料');
-                return getDefaultTableData();
+                console.error('讀取 data.json 失敗:', error);
+                return null;
             }
         }
-        
-        // 保存表格數據到 Google Sheets
-        async function saveTableData(rowIndex, updatedData) {
-            if (!cloudConnected) {
-                alert('無法連接到雲端，請檢查網路連接');
-                return false;
-            }
-            
+
+        // ---------- 觸發 Workflow (透過 Cloudflare Proxy) ----------
+        async function saveDataToGitHub(dataArray) {
             try {
-                const response = await fetch(GAS_URL, {
+                const resp = await fetch(PROXY_URL, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        index: rowIndex,
-                        updatedData: updatedData
+                        owner: REPO_OWNER,
+                        repo: REPO_NAME,
+                        workflow_file: WORKFLOW_FILE,
+                        branch: BRANCH,
+                        data: dataArray
                     })
                 });
-                
-                const result = await response.json();
+
+                if (!resp.ok) {
+                    const errText = await resp.text();
+                    throw new Error(`Proxy 錯誤 (${resp.status}): ${errText}`);
+                }
+
+                const result = await resp.json();
                 return result.success;
             } catch (error) {
-                console.error('保存到雲端錯誤:', error);
-                alert('保存到雲端失敗，請檢查網路連接');
+                console.error('觸發 Workflow 錯誤:', error);
+                alert('觸發雲端更新失敗：' + error.message);
                 return false;
             }
         }
-        
-        // 更新連接狀態顯示
+
         function updateConnectionStatus(connected, message) {
-            const statusElement = document.getElementById('connection-status');
-            if (connected) {
-                statusElement.className = 'connection-status connection-success';
-            } else {
-                statusElement.className = 'connection-status connection-error';
-            }
-            statusElement.textContent = message;
+            const el = document.getElementById('connection-status');
+            el.className = `connection-status ${connected ? 'connection-success' : 'connection-error'}`;
+            el.textContent = message;
         }
-        
-        // 預設資料（當無法從雲端載入時使用）
+
+        // ---------- 預設資料 ----------
         function getDefaultTableData() {
             return [
-                // A321
                 { type: "header", aircraft: "A321", document: "REV", revision: "", date: "", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "AMM/TSM/AWM/ASM", revision: "18", date: "2025/8/1", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "MEL", revision: "17", date: "2025/8/6", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "SRM", revision: "30", date: "2025/2/1", note: "", updateDate: "" },
-                
-                // A330
                 { type: "header", aircraft: "A330", document: "REV", revision: "", date: "", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "AMM/TSM/AWM/ASM", revision: "86", date: "2025/10/1", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "MEL", revision: "27", date: "2025/9/5", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "SRM", revision: "125", date: "2025/1/1", note: "", updateDate: "" },
-                
-                // A350
                 { type: "header", aircraft: "A350", document: "REV", revision: "", date: "", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "MP/AFI", revision: "94", date: "2025/10/1", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "MEL", revision: "38", date: "2025/6/27", note: "", updateDate: "" },
-                
-                // B738
                 { type: "header", aircraft: "B738", document: "REV", revision: "", date: "", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "AMM / FIM", revision: "88", date: "2025/10/15", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "MEL", revision: "38", date: "2024/12/26", note: "", updateDate: "" },
@@ -753,16 +275,12 @@
                 { type: "data", aircraft: "", document: "ILFC-WDM/SSM", revision: "123", date: "2025/8/27", note: "651 ; 652", updateDate: "" },
                 { type: "data", aircraft: "", document: "SMBC-WDM/SSM", revision: "67", date: "2025/6/23", note: "657", updateDate: "" },
                 { type: "data", aircraft: "", document: "SIL-WDM/SSM", revision: "79", date: "2025/5/30", note: "661~667", updateDate: "" },
-                
-                // B744
                 { type: "header", aircraft: "B744", document: "REV", revision: "", date: "", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "AMM / FIM", revision: "114", date: "2025/7/15", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "MEL", revision: "50", date: "2025/3/10", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "WDM / SSM", revision: "74", date: "2025/8/12", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "SRM 747-400", revision: "124", date: "2025/6/20", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "SRM 747-400F", revision: "104", date: "2025/6/20", note: "", updateDate: "" },
-                
-                // B777
                 { type: "header", aircraft: "B777", document: "REV", revision: "", date: "", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "AMM / FIM", revision: "105", date: "2025/9/5", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "MEL", revision: "16", date: "2025/7/14", note: "", updateDate: "" },
@@ -770,22 +288,16 @@
                 { type: "data", aircraft: "", document: "SRM 777-F", revision: "51", date: "2025/9/15", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "CHI- WDM / SSM", revision: "28", date: "2025/6/30", note: "001~007", updateDate: "" },
                 { type: "data", aircraft: "", document: "GEF- WDM / SSM", revision: "45", date: "2025/6/27", note: "051~055", updateDate: "" },
-                
-                // B787
                 { type: "header", aircraft: "B787", document: "REV", revision: "", date: "", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "AMM/FIM", revision: "", date: "", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "MEL", revision: "", date: "", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "SRM", revision: "", date: "", note: "", updateDate: "" },
-                
-                // 通用手冊
                 { type: "header", aircraft: "通用", document: "REV", revision: "", date: "", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "ESPM", revision: "49", date: "2024/5/1", note: "AIRBUS", updateDate: "" },
                 { type: "data", aircraft: "", document: "SWPM", revision: "89", date: "2025/6/15", note: "BOEING", updateDate: "" },
                 { type: "data", aircraft: "", document: "CAT II /III MAINT", revision: "37", date: "2025/6/16", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "FLIGHT KIT MANAGEMENT", revision: "17", date: "2025/7/15", note: "QP10MN073", updateDate: "" },
                 { type: "data", aircraft: "", document: "UPDATE （即時更新日期）", revision: "", date: getCurrentDate(), note: "", updateDate: "" },
-                
-                // EON 4 USE CMM ON A/C
                 { type: "section", aircraft: "EON 4 USE CMM ON A/C", document: "REV", revision: "", date: "", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "EON ME-321-25-0001", revision: "5", date: "2023/11/21", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "EON ME-333-25-0004", revision: "1", date: "2024/5/21", note: "", updateDate: "" },
@@ -793,8 +305,6 @@
                 { type: "data", aircraft: "", document: "EON ME-738-25-0008", revision: "5", date: "2023/3/31", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "EON ME-744-25-0001", revision: "17", date: "2023/12/19", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "EON ME-777-25-0006", revision: "4", date: "2023/4/17", note: "", updateDate: "" },
-                
-                // MEL NEF ITEM TYPE
                 { type: "section", aircraft: "MEL NEF ITEM", document: "TYPE", revision: "", date: "", note: "", updateDate: "" },
                 { type: "data", aircraft: "", document: "MEL 25-90-50 (A OR B)", revision: "", date: "", note: "A321", updateDate: "" },
                 { type: "data", aircraft: "", document: "MEL 25-90-50 (A OR B)", revision: "", date: "", note: "A330", updateDate: "" },
@@ -802,8 +312,6 @@
                 { type: "data", aircraft: "", document: "MEL 25-10 (A OR B)", revision: "", date: "", note: "B738", updateDate: "" },
                 { type: "data", aircraft: "", document: "MEL 25-20-01 (A OR B)", revision: "", date: "", note: "B744", updateDate: "" },
                 { type: "data", aircraft: "", document: "MEL 25-20-01 (A OR B)", revision: "", date: "", note: "B777", updateDate: "" },
-                
-                // 备注信息
                 { type: "note", aircraft: "", document: "", revision: "", date: "", note: "Note: 本章節僅供快速查閱使用。正確版本請依照公司正式Manual", updateDate: "" },
                 { type: "note", aircraft: "", document: "", revision: "", date: "", note: "如有錯誤歡迎告知，謝謝", updateDate: "" },
                 { type: "note", aircraft: "", document: "", revision: "", date: "", note: "Highlights為近期更新項目", updateDate: "" },
@@ -811,19 +319,32 @@
                 { type: "note", aircraft: "", document: "B: DEFERRAL LIST", revision: "", date: "", note: "", updateDate: "" }
             ];
         }
-        
-        // 編輯模式狀態
-        let isEditMode = false;
-        let selectedRows = new Set(); // 存儲被選中的行索引
-        let editingRows = new Set(); // 存儲正在編輯的行索引
-        
-        // 生成表格
+
+        // ---------- 載入資料 ----------
+        async function loadTableData() {
+            try {
+                const data = await fetchDataFromGitHub();
+                if (data && Array.isArray(data) && data.length > 0) {
+                    githubConnected = true;
+                    updateConnectionStatus(true, `✓ 已連接 GitHub 雲端 (${data.length} 筆資料)`);
+                    return data;
+                } else {
+                    throw new Error('無資料或格式錯誤');
+                }
+            } catch (error) {
+                githubConnected = false;
+                updateConnectionStatus(false, '⚠ 使用本地預設資料（讀取 data.json 失敗）');
+                console.warn('使用預設資料', error);
+                return getDefaultTableData();
+            }
+        }
+
+        // ---------- 生成表格 ----------
         async function generateTable() {
-            const tableData = await loadTableData();
+            tableData = await loadTableData();
             const table = document.getElementById('table-content');
             table.innerHTML = '';
-            
-            // 添加表头
+
             const headerRow = document.createElement('tr');
             headerRow.innerHTML = `
                 <th>機型</th>
@@ -834,32 +355,19 @@
                 ${isEditMode ? '<th>選擇編輯</th>' : ''}
             `;
             table.appendChild(headerRow);
-            
-            // 添加数据行
+
             tableData.forEach((item, index) => {
                 const row = document.createElement('tr');
                 row.dataset.index = index;
-                
-                // 檢查是否需要添加最近更新高亮
                 const isRecentlyUpdated = item.updateDate && isWithinFourMonths(item.updateDate);
-                
-                // 檢查是否被選中
                 const isSelected = selectedRows.has(index);
                 const selectedClass = isSelected ? 'selected-row' : '';
-                
-                // 檢查是否正在編輯
                 const isEditing = editingRows.has(index);
-                
+
                 if (item.type === "header") {
-                    // 设置机型的背景颜色
                     let bgColor = "#FFFFFF";
-                    if (['A321', 'A330', 'A350'].includes(item.aircraft)) {
-                        bgColor = "#4DB6E8";
-                    } else if (['B738', 'B744', 'B777', 'B787', '通用'].includes(item.aircraft)) {
-                        bgColor = "#F49A8E";
-                    }
-                    
-                    // 设置REV列及其後面欄位的背景颜色為粉紫色
+                    if (['A321','A330','A350'].includes(item.aircraft)) bgColor = "#4DB6E8";
+                    else if (['B738','B744','B777','B787','通用'].includes(item.aircraft)) bgColor = "#F49A8E";
                     row.innerHTML = `
                         <td style="background-color:${bgColor};"><strong>${item.aircraft}</strong></td>
                         <td style="background-color:#E5A9E1;"><strong>${item.document}</strong></td>
@@ -869,65 +377,41 @@
                         ${isEditMode ? '<td style="background-color:#E5A9E1;"></td>' : ''}
                     `;
                 } else if (item.type === "section") {
-                    // 特殊處理MEL NEF ITEM部分
+                    const colspan = isEditMode ? 6 : 5;
                     if (item.aircraft === "MEL NEF ITEM") {
-                        row.innerHTML = `
-                            <td colspan="5" style="background-color:#E9D9E9;">
-                                <strong>${item.aircraft}</strong> 
-                                <span class="type-aligned-header">${item.document}</span>
-                            </td>
-                            ${isEditMode ? '<td style="background-color:#E9D9E9;"></td>' : ''}
-                        `;
+                        row.innerHTML = `<td colspan="${colspan}" style="background-color:#E9D9E9;"><strong>${item.aircraft}</strong> <span class="type-aligned-header">${item.document}</span></td>`;
                     } else {
-                        row.innerHTML = `
-                            <td colspan="5" style="background-color:#E9D9E9;"><strong>${item.aircraft}</strong></td>
-                            ${isEditMode ? '<td style="background-color:#E9D9E9;"></td>' : ''}
-                        `;
+                        row.innerHTML = `<td colspan="${colspan}" style="background-color:#E9D9E9;"><strong>${item.aircraft}</strong></td>`;
                     }
                 } else if (item.type === "note") {
-                    // 特殊處理Highlights行
-                    if (item.note.includes("Highlights為近期更新項目")) {
-                        row.style.backgroundColor = "#FFF56E";
-                    } else {
-                        row.style.backgroundColor = "#fff3cd";
-                    }
-                    
+                    const bg = item.note.includes("Highlights為近期更新項目") ? "#FFF56E" : "#fff3cd";
+                    row.style.backgroundColor = bg;
+                    const colspan = isEditMode ? 6 : 5;
                     if (item.document) {
-                        row.innerHTML = `
-                            <td colspan="5"><strong>${item.document}</strong> ${item.note}</td>
-                            ${isEditMode ? '<td></td>' : ''}
-                        `;
+                        row.innerHTML = `<td colspan="${colspan}"><strong>${item.document}</strong> ${item.note}</td>`;
                     } else {
-                        row.innerHTML = `
-                            <td colspan="5">${item.note}</td>
-                            ${isEditMode ? '<td></td>' : ''}
-                        `;
+                        row.innerHTML = `<td colspan="${colspan}">${item.note}</td>`;
                     }
                 } else {
-                    // 特殊處理UPDATE行
-                    if (item.document === "UPDATE （即時更新日期）") {
+                    const bgStyle = isRecentlyUpdated ? "recently-updated" : "";
+                    const doc = item.document;
+                    
+                    if (doc === "UPDATE （即時更新日期）") {
                         row.innerHTML = `
                             <td style="background-color:#FFFFFF;">${item.aircraft}</td>
-                            <td style="background-color:#FFFFFF;">${item.document}</td>
+                            <td style="background-color:#FFFFFF;">${doc}</td>
                             <td style="background-color:#FFFFFF;">${item.revision}</td>
                             <td style="background-color:#FFF56E;">${item.date}</td>
                             <td style="background-color:#FFFFFF;">${item.note}</td>
                             ${isEditMode ? '<td style="background-color:#FFFFFF;"></td>' : ''}
                         `;
-                    } 
-                    // 特殊處理通用手冊下的ESPM、SWPM等行
-                    else if (item.aircraft === "" && ['ESPM', 'SWPM', 'CAT II /III MAINT', 'FLIGHT KIT MANAGEMENT'].includes(item.document)) {
+                    } else if (['ESPM','SWPM','CAT II /III MAINT','FLIGHT KIT MANAGEMENT'].includes(doc) && item.aircraft === "") {
                         if (isEditing) {
-                            // 編輯模式
                             row.innerHTML = `
                                 <td style="background-color:#E6B3C7;">${item.aircraft}</td>
-                                <td style="background-color:#E6B3C7;">${item.document}</td>
-                                <td style="background-color:#E6B3C7;">
-                                    <input type="text" class="edit-input" value="${item.revision}" data-field="revision" data-index="${index}">
-                                </td>
-                                <td style="background-color:#E6B3C7;">
-                                    <input type="text" class="edit-input" value="${item.date}" data-field="date" data-index="${index}">
-                                </td>
+                                <td style="background-color:#E6B3C7;">${doc}</td>
+                                <td style="background-color:#E6B3C7;"><input type="text" class="edit-input" value="${item.revision}" data-field="revision" data-index="${index}"></td>
+                                <td style="background-color:#E6B3C7;"><input type="text" class="edit-input" value="${item.date}" data-field="date" data-index="${index}"></td>
                                 <td style="background-color:#E6B3C7;">
                                     <input type="text" class="edit-input" value="${item.note}" data-field="note" data-index="${index}">
                                     <div class="edit-controls">
@@ -938,43 +422,31 @@
                                 ${isEditMode ? `<td style="background-color:#E6B3C7;"><input type="checkbox" class="edit-checkbox" data-index="${index}" checked></td>` : ''}
                             `;
                         } else {
-                            // 正常顯示
                             row.innerHTML = `
                                 <td style="background-color:#E6B3C7;">${item.aircraft}</td>
-                                <td style="background-color:#E6B3C7;">${item.document}</td>
+                                <td style="background-color:#E6B3C7;">${doc}</td>
                                 <td style="background-color:#E6B3C7;">${item.revision}</td>
                                 <td style="background-color:#E6B3C7;">${item.date}</td>
                                 <td style="background-color:#E6B3C7;">${item.note}</td>
                                 ${isEditMode ? `<td style="background-color:#E6B3C7;"><input type="checkbox" class="edit-checkbox" data-index="${index}" ${isSelected ? 'checked' : ''}></td>` : ''}
                             `;
                         }
-                    }
-                    // 特殊處理MEL NEF ITEM數據行 - 機型往左移動一格
-                    else if (item.document.includes("MEL 25-") && item.note && ['A321', 'A330', 'A350', 'B738', 'B744', 'B777'].includes(item.note)) {
+                    } else if (doc.includes("MEL 25-") && item.note && ['A321','A330','A350','B738','B744','B777'].includes(item.note)) {
                         row.innerHTML = `
                             <td style="background-color:#FFFFFF;">${item.aircraft}</td>
-                            <td style="background-color:#FFFFFF;">${item.document}</td>
+                            <td style="background-color:#FFFFFF;">${doc}</td>
                             <td style="background-color:#FFFFFF;">${item.revision}</td>
                             <td style="background-color:#FFFFFF;">${item.date}</td>
-                            <td style="background-color:#FFFFFF;">
-                                <span class="type-aligned-data">${item.note}</span>
-                            </td>
+                            <td style="background-color:#FFFFFF;"><span class="type-aligned-data">${item.note}</span></td>
                             ${isEditMode ? '<td style="background-color:#FFFFFF;"></td>' : ''}
                         `;
                     } else {
-                        // 一般數據行
                         if (isEditing) {
-                            // 編輯模式
-                            const bgStyle = isRecentlyUpdated ? "recently-updated" : "";
                             row.innerHTML = `
                                 <td class="${bgStyle} ${selectedClass}">${item.aircraft}</td>
-                                <td class="${bgStyle} ${selectedClass}">${item.document}</td>
-                                <td class="${bgStyle} ${selectedClass}">
-                                    <input type="text" class="edit-input" value="${item.revision}" data-field="revision" data-index="${index}">
-                                </td>
-                                <td class="${bgStyle} ${selectedClass}">
-                                    <input type="text" class="edit-input" value="${item.date}" data-field="date" data-index="${index}">
-                                </td>
+                                <td class="${bgStyle} ${selectedClass}">${doc}</td>
+                                <td class="${bgStyle} ${selectedClass}"><input type="text" class="edit-input" value="${item.revision}" data-field="revision" data-index="${index}"></td>
+                                <td class="${bgStyle} ${selectedClass}"><input type="text" class="edit-input" value="${item.date}" data-field="date" data-index="${index}"></td>
                                 <td class="${bgStyle} ${selectedClass}">
                                     <input type="text" class="edit-input" value="${item.note}" data-field="note" data-index="${index}">
                                     <div class="edit-controls">
@@ -985,11 +457,9 @@
                                 ${isEditMode ? `<td class="${bgStyle} ${selectedClass}"><input type="checkbox" class="edit-checkbox" data-index="${index}" checked></td>` : ''}
                             `;
                         } else {
-                            // 正常顯示
-                            const bgStyle = isRecentlyUpdated ? "recently-updated" : "";
                             row.innerHTML = `
                                 <td class="${bgStyle} ${selectedClass}">${item.aircraft}</td>
-                                <td class="${bgStyle} ${selectedClass}">${item.document}</td>
+                                <td class="${bgStyle} ${selectedClass}">${doc}</td>
                                 <td class="${bgStyle} ${selectedClass}">${item.revision}</td>
                                 <td class="${bgStyle} ${selectedClass}">${item.date}</td>
                                 <td class="${bgStyle} ${selectedClass}">${item.note}</td>
@@ -998,184 +468,126 @@
                         }
                     }
                 }
-                
                 table.appendChild(row);
             });
-            
-            // 如果處於編輯模式，為勾選框添加事件監聽
+
+            // 綁定事件（編輯模式）
             if (isEditMode) {
-                document.querySelectorAll('.edit-checkbox').forEach(checkbox => {
-                    checkbox.addEventListener('change', function() {
-                        const rowIndex = parseInt(this.dataset.index);
-                        
-                        if (this.checked) {
-                            selectedRows.add(rowIndex);
-                            editingRows.add(rowIndex); // 自動進入編輯模式
-                        } else {
-                            selectedRows.delete(rowIndex);
-                            editingRows.delete(rowIndex); // 退出編輯模式
-                        }
-                        
-                        // 重新生成表格以更新編輯狀態
+                document.querySelectorAll('.edit-checkbox').forEach(cb => {
+                    cb.addEventListener('change', function() {
+                        const idx = parseInt(this.dataset.index);
+                        if (this.checked) { selectedRows.add(idx); editingRows.add(idx); } 
+                        else { selectedRows.delete(idx); editingRows.delete(idx); }
                         generateTable();
                     });
                 });
-                
-                // 為保存按鈕添加事件監聽
                 document.querySelectorAll('.save-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        const rowIndex = parseInt(this.dataset.index);
-                        saveRowEdit(rowIndex);
+                        const idx = parseInt(this.dataset.index);
+                        saveRowEdit(idx);
                     });
                 });
-                
-                // 為取消按鈕添加事件監聽
                 document.querySelectorAll('.cancel-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        const rowIndex = parseInt(this.dataset.index);
-                        editingRows.delete(rowIndex); // 退出編輯模式
-                        generateTable(); // 重新生成表格
+                        const idx = parseInt(this.dataset.index);
+                        editingRows.delete(idx);
+                        generateTable();
                     });
                 });
-                
-                // 為日期輸入框添加自動格式化
-                document.querySelectorAll('.edit-input[data-field="date"]').forEach(input => {
-                    input.addEventListener('input', function() {
-                        autoFormatDate(this);
-                    });
+                document.querySelectorAll('.edit-input[data-field="date"]').forEach(inp => {
+                    inp.addEventListener('input', function() { autoFormatDate(this); });
                 });
-                
-                // 為輸入框添加Enter鍵保存功能
-                document.querySelectorAll('.edit-input').forEach(input => {
-                    input.addEventListener('keypress', function(e) {
+                document.querySelectorAll('.edit-input').forEach(inp => {
+                    inp.addEventListener('keypress', function(e) {
                         if (e.key === 'Enter') {
-                            const rowIndex = parseInt(this.dataset.index);
-                            saveRowEdit(rowIndex);
+                            const idx = parseInt(this.dataset.index);
+                            saveRowEdit(idx);
                         }
                     });
                 });
             }
-            
-            // 显示表格区域
             document.getElementById('table-content-section').style.display = 'block';
         }
-        
-        // 保存行編輯
+
+        // ---------- 儲存單行（觸發 Workflow） ----------
         async function saveRowEdit(rowIndex) {
-            const tableData = await loadTableData();
+            if (rowIndex < 0 || rowIndex >= tableData.length) return;
             const item = tableData[rowIndex];
-            
-            // 獲取輸入框的值
-            const revisionInput = document.querySelector(`.edit-input[data-field="revision"][data-index="${rowIndex}"]`);
+
+            const revInput = document.querySelector(`.edit-input[data-field="revision"][data-index="${rowIndex}"]`);
             const dateInput = document.querySelector(`.edit-input[data-field="date"][data-index="${rowIndex}"]`);
             const noteInput = document.querySelector(`.edit-input[data-field="note"][data-index="${rowIndex}"]`);
-            
-            const newRevision = revisionInput ? revisionInput.value : item.revision;
+
+            const newRev = revInput ? revInput.value : item.revision;
             const newDate = dateInput ? dateInput.value : item.date;
             const newNote = noteInput ? noteInput.value : item.note;
-            
-            const oldRevision = item.revision || '';
-            
-            // 檢查版本號更新範圍
-            if (!isRevisionInRange(oldRevision, newRevision)) {
+
+            if (!isRevisionInRange(item.revision || '', newRev)) {
                 alert('超過設定值請聯絡管理員！');
                 return;
             }
-            
-            // 驗證日期格式
-            if (newDate && !validateDate(newDate)) {
-                return;
-            }
-            
-            // 檢查版本和備註只能輸入數字
-            if (newRevision && !/^\d+$/.test(newRevision)) {
-                alert('版本號只能輸入數字！');
-                return;
-            }
-            
-            if (newNote && !/^\d+$/.test(newNote)) {
-                alert('備註只能輸入數字！');
-                return;
-            }
-            
-            // 更新數據
-            const updatedData = {
-                type: item.type,
-                aircraft: item.aircraft,
-                document: item.document,
-                revision: newRevision,
+            if (newDate && !validateDate(newDate)) return;
+            if (newRev && !/^\d+$/.test(newRev)) { alert('版本號只能輸入數字！'); return; }
+            if (newNote && !/^\d+$/.test(newNote)) { alert('備註只能輸入數字！'); return; }
+
+            // 更新記憶體中的資料
+            tableData[rowIndex] = {
+                ...item,
+                revision: newRev,
                 date: newDate,
                 note: newNote,
                 updateDate: getCurrentDate()
             };
-            
-            // 保存到 Google Sheets
-            const success = await saveTableData(rowIndex, updatedData);
+
+            const success = await saveDataToGitHub(tableData);
             
             if (success) {
-                // 退出編輯模式但保持選中狀態
                 editingRows.delete(rowIndex);
-                
-                // 重新生成表格
-                await generateTable();
-                
-                alert('資料已更新到雲端！');
+                await generateTable(); 
+                alert('✅ 已觸發雲端更新！請等待約 5~10 秒後，按 F5 重新整理頁面查看最新資料。');
             } else {
-                alert('更新失敗，請檢查網路連接或稍後再試！');
+                alert('❌ 觸發失敗，請檢查 Token 權限或網路。');
             }
         }
-        
-        // 表格切换功能
+
+        // ---------- 表格隱藏/顯示 ----------
         document.getElementById('table-toggle').addEventListener('click', function() {
-            const tableBody = document.querySelector('.table-content-body');
-            const toggleButton = document.getElementById('table-toggle');
-            
-            if (tableBody.style.display === 'none') {
-                tableBody.style.display = 'block';
-                toggleButton.textContent = '隱藏表格';
+            const body = document.querySelector('.table-content-body');
+            const btn = document.getElementById('table-toggle');
+            if (body.style.display === 'none') {
+                body.style.display = 'block';
+                btn.textContent = '隱藏表格';
             } else {
-                tableBody.style.display = 'none';
-                toggleButton.textContent = '顯示表格';
+                body.style.display = 'none';
+                btn.textContent = '顯示表格';
             }
         });
-        
-        // 密碼驗證功能
+
+        // ---------- 密碼驗證（密碼：thankscal） ----------
         document.getElementById('password-btn').addEventListener('click', function() {
-            const passwordInput = document.getElementById('password-input');
-            const passwordError = document.getElementById('password-error');
-            const editIndicator = document.getElementById('edit-mode-indicator');
-            
-            // 密碼改為 "thankscal"
-            if (passwordInput.value === 'thankscal') {
-                // 密碼正確，進入編輯模式
+            const input = document.getElementById('password-input');
+            const error = document.getElementById('password-error');
+            const indicator = document.getElementById('edit-mode-indicator');
+            if (input.value === 'thankscal') {
                 isEditMode = true;
-                passwordError.style.display = 'none';
-                passwordInput.value = ''; // 清空密碼輸入框
-                editIndicator.style.display = 'block'; // 顯示編輯模式指示器
-                
-                // 重新生成表格，顯示編輯功能
+                error.style.display = 'none';
+                input.value = '';
+                indicator.style.display = 'block';
                 generateTable();
-                
                 alert('已進入編輯模式，勾選要編輯的列，版本和日期欄位會自動變成編輯模式');
             } else {
-                // 密碼錯誤，顯示錯誤信息
-                passwordError.style.display = 'block';
-                passwordInput.value = ''; // 清空密碼輸入框
-                passwordInput.focus(); // 聚焦到密碼輸入框
+                error.style.display = 'block';
+                input.value = '';
+                input.focus();
             }
         });
-        
-        // 按Enter鍵也可以驗證密碼
-        document.getElementById('password-input').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                document.getElementById('password-btn').click();
-            }
+        document.getElementById('password-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') document.getElementById('password-btn').click();
         });
-        
-        // 初始載入
-        window.addEventListener('DOMContentLoaded', async function() {
-            // 生成表格
-            await generateTable();
+
+        // ---------- 初始化 ----------
+        window.addEventListener('DOMContentLoaded', function() {
+            generateTable();
         });
     </script>
 </body>
