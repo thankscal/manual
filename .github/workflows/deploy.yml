@@ -12,10 +12,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4   # ← 用最新版本
         with:
-          node-version: 20
+          node-version: '20'
+          check-latest: true          # ← 強制抓最新的 20.x
+
+      - name: Verify Node.js version
+        run: node -v                  # ← 檢查版本，log 會顯示 v20.x
 
       - name: Install Wrangler
         run: npm install -g wrangler
