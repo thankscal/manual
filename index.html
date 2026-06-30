@@ -201,7 +201,7 @@
 
         // ---------- GitHub API 讀取 (直接抓 raw) ----------
         async function fetchDataFromGitHub() {
-            const url = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/data.json`;
+            const url = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/data.json?t=${Date.now()}`;
             try {
                 const resp = await fetch(url);
                 if (!resp.ok) {
@@ -718,7 +718,7 @@
             if (success) {
                 editingRows.delete(rowIndex);
                 await generateTable(); 
-                alert('✅ 已觸發雲端更新！請等待約 5~10 秒後，按 F5 重新整理頁面查看最新資料。');
+                alert('✅ 已觸發雲端更新！GitHub 同步可能需要 30 秒至 2 分鐘，請稍後重新整理頁面。');
             } else {
                 alert('❌ 觸發失敗，請檢查 Token 權限或網路。');
             }
