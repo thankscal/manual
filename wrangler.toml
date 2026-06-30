@@ -1,3 +1,7 @@
+
 name = "manual-proxy"
 main = "src/index.js"
 compatibility_date = "2024-06-20"
+
+[vars]
+TEST = "OK"
