@@ -1,26 +1,15 @@
+
 export default {
-  async fetch(request) {
-    if (request.method === "OPTIONS") {
-      return new Response(null, {
-        status: 204,
+  async fetch(request, env) {
+    return new Response(
+      JSON.stringify({
+        hasToken: !!env.MANUAL_TOKEN
+      }),
+      {
         headers: {
-          "Access-Control-Allow-Origin": "https://thankscal.github.io",
-          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type, Authorization"
+          "Content-Type": "application/json"
         }
-      });
-    }
-
-    const response = await fetch(request);
-
-    return new Response(response.body, {
-      status: response.status,
-      headers: {
-        ...Object.fromEntries(response.headers),
-        "Access-Control-Allow-Origin": "https://thankscal.github.io",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization"
       }
-    });
+    );
   }
 }
