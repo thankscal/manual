@@ -23,10 +23,15 @@ jobs:
           # 將輸入的 JSON 字串寫入檔案（處理特殊字元）
           printf '%s' '${{ github.event.inputs.data }}' > data.json
 
-      - name: Commit and push changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.json
-          git diff --cached --quiet || git commit -m "Update manual data from web"
-          git push
+      - 
+name: Commit and push changes
+  run: |
+    git config user.name "github-actions[bot]"
+    git config user.email "github-actions[bot]@users.noreply.github.com"
+
+    git add data.json
+    git diff --cached --quiet || git commit -m "Update manual data from web"
+
+    git pull --rebase origin main
+    git push origin main
+
