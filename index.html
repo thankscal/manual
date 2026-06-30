@@ -321,366 +321,22 @@
         }
 
         // ---------- 載入資料 ----------
-      async function loadTableData() {
-    try {
-        const data = await fetchDataFromGitHub();
-        // 現在 data 本身就是一個陣列，不再有 data.manuals
-        if (data && Array.isArray(data) && data.length > 0) {
-            githubConnected = true;
-            updateConnectionStatus(true, `✓ 已連接 GitHub 雲端 (${data.length} 筆資料)`);
-            return data;   // ← 直接回傳陣列
-        } else {
-            throw new Error('無資料或格式錯誤');
-        }
-    } catch (error) {
-        githubConnected = false;
-        updateConnectionStatus(false, '⚠ 使用本地預設資料（讀取 data.json 失敗）');
-        console.warn('使用預設資料', error);
-        return getDefaultTableData();
-    }
-}
-
-
-
-        // ---------- 生成表格 ----------
-        async function generateTable() {
-            tableData = await loadTableData();
-            const table = document.getElementById('table-content');
-            table.innerHTML = '';
-
-            const headerRow = document.createElement('tr');
-            headerRow.innerHTML = `
-                <th>機型</th>
-                <th>手冊類型</th>
-                <th>版本</th>
-                <th>日期</th>
-                <th>備註</th>
-                ${isEditMode ? '<th>選擇編輯</th>' : ''}
-            `;
-            table.appendChild(headerRow);
-
-            tableData.forEach((item, index) => {
-                const row = document.createElement('tr');
-                row.dataset.index = index;
-                const isRecentlyUpdated = item.updateDate && isWithinFourMonths(item.updateDate);
-                const isSelected = selectedRows.has(index);
-                const selectedClass = isSelected ? 'selected-row' : '';
-                const isEditing = editingRows.has(index);
-
-                if (item.type === "header") {
-                    let bgColor = "#FFFFFF";
-                    if (['A321','A330','A350'].includes(item.aircraft)) bgColor = "#4DB6E8";
-                    else if (['B738','B744','B777','B787','通用'].includes(item.aircraft)) bgColor = "#F49A8E";
-                    row.innerHTML = `
-                        <td style="background-color:${bgColor};"><strong>${item.aircraft}</strong></td>
-                        <td style="background-color:#E5A9E1;"><strong>${item.document}</strong></td>
-                        <td style="background-color:#E5A9E1;">${item.revision}</td>
-                        <td style="background-color:#E5A9E1;">${item.date}</td>
-                        <td style="background-color:#E5A9E1;">${item.note}</td>
-                        ${isEditMode ? '<td style="background-color:#E5A9E1;"></td>' : ''}
-                    `;
-                } else if (item.type === "section") {
-                    const colspan = isEditMode ? 6 : 5;
-                    if (item.aircraft === "MEL NEF ITEM") {
-                        row.innerHTML = `<td colspan="${colspan}" style="background-color:#E9D9E9;"><strong>${item.aircraft}</strong> <span class="type-aligned-header">${item.document}</span></td>`;
-                    } else {
-                        row.innerHTML = `<td colspan="${colspan}" style="background-color:#E9D9E9;"><strong>${item.aircraft}</strong></td>`;
-                    }
-                } else if (item.type === "note") {
-                    const bg = item.note.includes("Highlights為近期更新項目") ? "#FFF56E" : "#fff3cd";
-                    row.style.backgroundColor = bg;
-                    const colspan = isEditMode ? 6 : 5;
-                    if (item.document) {
-                        row.innerHTML = `<td colspan="${colspan}"><strong>${item.document}</strong> ${item.note}</td>`;
-                    } else {
-                        row.innerHTML = `<td colspan="${colspan}">${item.note}</td>`;
-                    }
+        async function loadTableData() {
+            try {
+                const data = await fetchDataFromGitHub();
+                if (data && Array.isArray(data) && data.length > 0) {
+                    githubConnected = true;
+                    updateConnectionStatus(true, `✓ 已連接 GitHub 雲端 (${data.length} 筆資料)`);
+                    return data;
                 } else {
-                    const bgStyle = isRecentlyUpdated ? "recently-updated" : "";
-                    const doc = item.document;
-                    
-                    if (doc === "UPDATE （即時更新日期）") {
-                        row.innerHTML = `
-                            <td style="background-color:#FFFFFF;">${item.aircraft}</td>
-                            <td style="background-color:#FFFFFF;">${doc}</td>
-                            <td style="background-color:#FFFFFF;">${item.revision}</td>
-                            <td style="background-color:#FFF56E;">${item.date}</td>
-                            <td style="background-color:#FFFFFF;">${item.note}</td>
-                            ${isEditMode ? '<td style="background-color:#FFFFFF;"></td>' : ''}
-                        `;
-                    } else if (['ESPM','SWPM','CAT II /III MAINT','FLIGHT KIT MANAGEMENT'].includes(doc) && item.aircraft === "") {
-                        if (isEditing) {
-                            row.innerHTML = `
-                                <td style="background-color:#E6B3C7;">${item.aircraft}</td>
-                                <td style="background-color:#E6B3C7;">${doc}</td>
-                                <td style="background-color:#E6B3C7;"><input type="text" class="edit-input" value="${item.revision}" data-field="revision" data-index="${index}"></td>
-                                <td style="background-color:#E6B3C7;"><input type="text" class="edit-input" value="${item.date}" data-field="date" data-index="${index}"></td>
-                                <td style="background-color:#E6B3C7;">
-                                    <input type="text" class="edit-input" value="${item.note}" data-field="note" data-index="${index}">
-                                    <div class="edit-controls">
-                                        <button class="edit-btn save-btn" data-index="${index}">保存</button>
-                                        <button class="edit-btn cancel-btn" data-index="${index}">取消</button>
-                                    </div>
-                                </td>
-                                ${isEditMode ? `<td style="background-color:#E6B3C7;"><input type="checkbox" class="edit-checkbox" data-index="${index}" checked></td>` : ''}
-                            `;
-                        } else {
-                            row.innerHTML = `
-                                <td style="background-color:#E6B3C7;">${item.aircraft}</td>
-                                <td style="background-color:#E6B3C7;">${doc}</td>
-                                <td style="background-color:#E6B3C7;">${item.revision}</td>
-                                <td style="background-color:#E6B3C7;">${item.date}</td>
-                                <td style="background-color:#E6B3C7;">${item.note}</td>
-                                ${isEditMode ? `<td style="background-color:#E6B3C7;"><input type="checkbox" class="edit-checkbox" data-index="${index}" ${isSelected ? 'checked' : ''}></td>` : ''}
-                            `;
-                        }
-                    } else if (doc.includes("MEL 25-") && item.note && ['A321','A330','A350','B738','B744','B777'].includes(item.note)) {
-                        row.innerHTML = `
-                            <td style="background-color:#FFFFFF;">${item.aircraft}</td>
-                            <td style="background-color:#FFFFFF;">${doc}</td>
-                            <td style="background-color:#FFFFFF;">${item.revision}</td>
-                            <td style="background-color:#FFFFFF;">${item.date}</td>
-                            <td style="background-color:#FFFFFF;"><span class="type-aligned-data">${item.note}</span></td>
-                            ${isEditMode ? '<td style="background-color:#FFFFFF;"></td>' : ''}
-                        `;
-                    } else {
-                        if (isEditing) {
-                            row.innerHTML = `
-                                <td class="${bgStyle} ${selectedClass}">${item.aircraft}</td>
-                                <td class="${bgStyle} ${selectedClass}">${doc}</td>
-                                <td class="${bgStyle} ${selectedClass}"><input type="text" class="edit-input" value="${item.revision}" data-field="revision" data-index="${index}"></td>
-                                <td class="${bgStyle} ${selectedClass}"><input type="text" class="edit-input" value="${item.date}" data-field="date" data-index="${index}"></td>
-                                <td class="${bgStyle} ${selectedClass}">
-                                    <input type="text" class="edit-input" value="${item.note}" data-field="note" data-index="${index}">
-                                    <div class="edit-controls">
-                                        <button class="edit-btn save-btn" data-index="${index}">保存</button>
-                                        <button class="edit-btn cancel-btn" data-index="${index}">取消</button>
-                                    </div>
-                                </td>
-                                ${isEditMode ? `<td class="${bgStyle} ${selectedClass}"><input type="checkbox" class="edit-checkbox" data-index="${index}" checked></td>` : ''}
-                            `;
-                        } else {
-                            row.innerHTML = `
-                                <td class="${bgStyle} ${selectedClass}">${item.aircraft}</td>
-                                <td class="${bgStyle} ${selectedClass}">${doc}</td>
-                                <td class="${bgStyle} ${selectedClass}">${item.revision}</td>
-                                <td class="${bgStyle} ${selectedClass}">${item.date}</td>
-                                <td class="${bgStyle} ${selectedClass}">${item.note}</td>
-                                ${isEditMode ? `<td class="${bgStyle} ${selectedClass}"><input type="checkbox" class="edit-checkbox" data-index="${index}" ${isSelected ? 'checked' : ''}></td>` : ''}
-                            `;
-                        }
-                    }
+                    throw new Error('無資料或格式錯誤');
                 }
-                table.appendChild(row);
-            });
-
-            // 綁定事件（編輯模式）
-            if (isEditMode) {
-                document.querySelectorAll('.edit-checkbox').forEach(cb => {
-                    cb.addEventListener('change', function() {
-                        const idx = parseInt(this.dataset.index);
-                        if (this.checked) { selectedRows.add(idx); editingRows.add(idx); } 
-                        else { selectedRows.delete(idx); editingRows.delete(idx); }
-                        generateTable();
-                    });
-                });
-                document.querySelectorAll('.save-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const idx = parseInt(this.dataset.index);
-                        saveRowEdit(idx);
-                    });
-                });
-                document.querySelectorAll('.cancel-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const idx = parseInt(this.dataset.index);
-                        editingRows.delete(idx);
-                        generateTable();
-                    });
-                });
-                document.querySelectorAll('.edit-input[data-field="date"]').forEach(inp => {
-                    inp.addEventListener('input', function() { autoFormatDate(this); });
-                });
-                document.querySelectorAll('.edit-input').forEach(inp => {
-                    inp.addEventListener('keypress', function(e) {
-                        if (e.key === 'Enter') {
-                            const idx = parseInt(this.dataset.index);
-                            saveRowEdit(idx);
-                        }
-                    });
-                });
+            } catch (error) {
+                githubConnected = false;
+                updateConnectionStatus(false, '⚠ 使用本地預設資料（讀取 data.json 失敗）');
+                console.warn('使用預設資料', error);
+                return getDefaultTableData();
             }
-            document.getElementById('table-content-section').style.display = 'block';
-        }
-
-
-        // ---------- 生成表格 ----------
-        async function generateTable() {
-            tableData = await loadTableData();
-            const table = document.getElementById('table-content');
-            table.innerHTML = '';
-
-            const headerRow = document.createElement('tr');
-            headerRow.innerHTML = `
-                <th>機型</th>
-                <th>手冊類型</th>
-                <th>版本</th>
-                <th>日期</th>
-                <th>備註</th>
-                ${isEditMode ? '<th>選擇編輯</th>' : ''}
-            `;
-            table.appendChild(headerRow);
-
-            tableData.forEach((item, index) => {
-                const row = document.createElement('tr');
-                row.dataset.index = index;
-                const isRecentlyUpdated = item.updateDate && isWithinFourMonths(item.updateDate);
-                const isSelected = selectedRows.has(index);
-                const selectedClass = isSelected ? 'selected-row' : '';
-                const isEditing = editingRows.has(index);
-
-                if (item.type === "header") {
-                    let bgColor = "#FFFFFF";
-                    if (['A321','A330','A350'].includes(item.aircraft)) bgColor = "#4DB6E8";
-                    else if (['B738','B744','B777','B787','通用'].includes(item.aircraft)) bgColor = "#F49A8E";
-                    row.innerHTML = `
-                        <td style="background-color:${bgColor};"><strong>${item.aircraft}</strong></td>
-                        <td style="background-color:#E5A9E1;"><strong>${item.document}</strong></td>
-                        <td style="background-color:#E5A9E1;">${item.revision}</td>
-                        <td style="background-color:#E5A9E1;">${item.date}</td>
-                        <td style="background-color:#E5A9E1;">${item.note}</td>
-                        ${isEditMode ? '<td style="background-color:#E5A9E1;"></td>' : ''}
-                    `;
-                } else if (item.type === "section") {
-                    const colspan = isEditMode ? 6 : 5;
-                    if (item.aircraft === "MEL NEF ITEM") {
-                        row.innerHTML = `<td colspan="${colspan}" style="background-color:#E9D9E9;"><strong>${item.aircraft}</strong> <span class="type-aligned-header">${item.document}</span></td>`;
-                    } else {
-                        row.innerHTML = `<td colspan="${colspan}" style="background-color:#E9D9E9;"><strong>${item.aircraft}</strong></td>`;
-                    }
-                } else if (item.type === "note") {
-                    const bg = item.note.includes("Highlights為近期更新項目") ? "#FFF56E" : "#fff3cd";
-                    row.style.backgroundColor = bg;
-                    const colspan = isEditMode ? 6 : 5;
-                    if (item.document) {
-                        row.innerHTML = `<td colspan="${colspan}"><strong>${item.document}</strong> ${item.note}</td>`;
-                    } else {
-                        row.innerHTML = `<td colspan="${colspan}">${item.note}</td>`;
-                    }
-                } else {
-                    const bgStyle = isRecentlyUpdated ? "recently-updated" : "";
-                    const doc = item.document;
-                    
-                    if (doc === "UPDATE （即時更新日期）") {
-                        row.innerHTML = `
-                            <td style="background-color:#FFFFFF;">${item.aircraft}</td>
-                            <td style="background-color:#FFFFFF;">${doc}</td>
-                            <td style="background-color:#FFFFFF;">${item.revision}</td>
-                            <td style="background-color:#FFF56E;">${item.date}</td>
-                            <td style="background-color:#FFFFFF;">${item.note}</td>
-                            ${isEditMode ? '<td style="background-color:#FFFFFF;"></td>' : ''}
-                        `;
-                    } else if (['ESPM','SWPM','CAT II /III MAINT','FLIGHT KIT MANAGEMENT'].includes(doc) && item.aircraft === "") {
-                        if (isEditing) {
-                            row.innerHTML = `
-                                <td style="background-color:#E6B3C7;">${item.aircraft}</td>
-                                <td style="background-color:#E6B3C7;">${doc}</td>
-                                <td style="background-color:#E6B3C7;"><input type="text" class="edit-input" value="${item.revision}" data-field="revision" data-index="${index}"></td>
-                                <td style="background-color:#E6B3C7;"><input type="text" class="edit-input" value="${item.date}" data-field="date" data-index="${index}"></td>
-                                <td style="background-color:#E6B3C7;">
-                                    <input type="text" class="edit-input" value="${item.note}" data-field="note" data-index="${index}">
-                                    <div class="edit-controls">
-                                        <button class="edit-btn save-btn" data-index="${index}">保存</button>
-                                        <button class="edit-btn cancel-btn" data-index="${index}">取消</button>
-                                    </div>
-                                </td>
-                                ${isEditMode ? `<td style="background-color:#E6B3C7;"><input type="checkbox" class="edit-checkbox" data-index="${index}" checked></td>` : ''}
-                            `;
-                        } else {
-                            row.innerHTML = `
-                                <td style="background-color:#E6B3C7;">${item.aircraft}</td>
-                                <td style="background-color:#E6B3C7;">${doc}</td>
-                                <td style="background-color:#E6B3C7;">${item.revision}</td>
-                                <td style="background-color:#E6B3C7;">${item.date}</td>
-                                <td style="background-color:#E6B3C7;">${item.note}</td>
-                                ${isEditMode ? `<td style="background-color:#E6B3C7;"><input type="checkbox" class="edit-checkbox" data-index="${index}" ${isSelected ? 'checked' : ''}></td>` : ''}
-                            `;
-                        }
-                    } else if (doc.includes("MEL 25-") && item.note && ['A321','A330','A350','B738','B744','B777'].includes(item.note)) {
-                        row.innerHTML = `
-                            <td style="background-color:#FFFFFF;">${item.aircraft}</td>
-                            <td style="background-color:#FFFFFF;">${doc}</td>
-                            <td style="background-color:#FFFFFF;">${item.revision}</td>
-                            <td style="background-color:#FFFFFF;">${item.date}</td>
-                            <td style="background-color:#FFFFFF;"><span class="type-aligned-data">${item.note}</span></td>
-                            ${isEditMode ? '<td style="background-color:#FFFFFF;"></td>' : ''}
-                        `;
-                    } else {
-                        if (isEditing) {
-                            row.innerHTML = `
-                                <td class="${bgStyle} ${selectedClass}">${item.aircraft}</td>
-                                <td class="${bgStyle} ${selectedClass}">${doc}</td>
-                                <td class="${bgStyle} ${selectedClass}"><input type="text" class="edit-input" value="${item.revision}" data-field="revision" data-index="${index}"></td>
-                                <td class="${bgStyle} ${selectedClass}"><input type="text" class="edit-input" value="${item.date}" data-field="date" data-index="${index}"></td>
-                                <td class="${bgStyle} ${selectedClass}">
-                                    <input type="text" class="edit-input" value="${item.note}" data-field="note" data-index="${index}">
-                                    <div class="edit-controls">
-                                        <button class="edit-btn save-btn" data-index="${index}">保存</button>
-                                        <button class="edit-btn cancel-btn" data-index="${index}">取消</button>
-                                    </div>
-                                </td>
-                                ${isEditMode ? `<td class="${bgStyle} ${selectedClass}"><input type="checkbox" class="edit-checkbox" data-index="${index}" checked></td>` : ''}
-                            `;
-                        } else {
-                            row.innerHTML = `
-                                <td class="${bgStyle} ${selectedClass}">${item.aircraft}</td>
-                                <td class="${bgStyle} ${selectedClass}">${doc}</td>
-                                <td class="${bgStyle} ${selectedClass}">${item.revision}</td>
-                                <td class="${bgStyle} ${selectedClass}">${item.date}</td>
-                                <td class="${bgStyle} ${selectedClass}">${item.note}</td>
-                                ${isEditMode ? `<td class="${bgStyle} ${selectedClass}"><input type="checkbox" class="edit-checkbox" data-index="${index}" ${isSelected ? 'checked' : ''}></td>` : ''}
-                            `;
-                        }
-                    }
-                }
-                table.appendChild(row);
-            });
-
-            // 綁定事件（編輯模式）
-            if (isEditMode) {
-                document.querySelectorAll('.edit-checkbox').forEach(cb => {
-                    cb.addEventListener('change', function() {
-                        const idx = parseInt(this.dataset.index);
-                        if (this.checked) { selectedRows.add(idx); editingRows.add(idx); } 
-                        else { selectedRows.delete(idx); editingRows.delete(idx); }
-                        generateTable();
-                    });
-                });
-                document.querySelectorAll('.save-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const idx = parseInt(this.dataset.index);
-                        saveRowEdit(idx);
-                    });
-                });
-                document.querySelectorAll('.cancel-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const idx = parseInt(this.dataset.index);
-                        editingRows.delete(idx);
-                        generateTable();
-                    });
-                });
-                document.querySelectorAll('.edit-input[data-field="date"]').forEach(inp => {
-                    inp.addEventListener('input', function() { autoFormatDate(this); });
-                });
-                document.querySelectorAll('.edit-input').forEach(inp => {
-                    inp.addEventListener('keypress', function(e) {
-                        if (e.key === 'Enter') {
-                            const idx = parseInt(this.dataset.index);
-                            saveRowEdit(idx);
-                        }
-                    });
-                });
-            }
-            document.getElementById('table-content-section').style.display = 'block';
         }
 
         // ---------- 儲存單行（觸發 Workflow） ----------
@@ -724,6 +380,195 @@
             }
         }
 
+        // ---------- 生成表格（唯一定義，使用事件委託） ----------
+        async function generateTable() {
+            tableData = await loadTableData();
+            const table = document.getElementById('table-content');
+            table.innerHTML = '';
+
+            const headerRow = document.createElement('tr');
+            headerRow.innerHTML = `
+                <th>機型</th>
+                <th>手冊類型</th>
+                <th>版本</th>
+                <th>日期</th>
+                <th>備註</th>
+                ${isEditMode ? '<th>選擇編輯</th>' : ''}
+            `;
+            table.appendChild(headerRow);
+
+            tableData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.dataset.index = index;
+                const isRecentlyUpdated = item.updateDate && isWithinFourMonths(item.updateDate);
+                const isSelected = selectedRows.has(index);
+                const selectedClass = isSelected ? 'selected-row' : '';
+                const isEditing = editingRows.has(index);
+
+                if (item.type === "header") {
+                    let bgColor = "#FFFFFF";
+                    if (['A321','A330','A350'].includes(item.aircraft)) bgColor = "#4DB6E8";
+                    else if (['B738','B744','B777','B787','通用'].includes(item.aircraft)) bgColor = "#F49A8E";
+                    row.innerHTML = `
+                        <td style="background-color:${bgColor};"><strong>${item.aircraft}</strong></td>
+                        <td style="background-color:#E5A9E1;"><strong>${item.document}</strong></td>
+                        <td style="background-color:#E5A9E1;">${item.revision}</td>
+                        <td style="background-color:#E5A9E1;">${item.date}</td>
+                        <td style="background-color:#E5A9E1;">${item.note}</td>
+                        ${isEditMode ? '<td style="background-color:#E5A9E1;"></td>' : ''}
+                    `;
+                } else if (item.type === "section") {
+                    const colspan = isEditMode ? 6 : 5;
+                    if (item.aircraft === "MEL NEF ITEM") {
+                        row.innerHTML = `<td colspan="${colspan}" style="background-color:#E9D9E9;"><strong>${item.aircraft}</strong> <span class="type-aligned-header">${item.document}</span></td>`;
+                    } else {
+                        row.innerHTML = `<td colspan="${colspan}" style="background-color:#E9D9E9;"><strong>${item.aircraft}</strong></td>`;
+                    }
+                } else if (item.type === "note") {
+                    const bg = item.note.includes("Highlights為近期更新項目") ? "#FFF56E" : "#fff3cd";
+                    row.style.backgroundColor = bg;
+                    const colspan = isEditMode ? 6 : 5;
+                    if (item.document) {
+                        row.innerHTML = `<td colspan="${colspan}"><strong>${item.document}</strong> ${item.note}</td>`;
+                    } else {
+                        row.innerHTML = `<td colspan="${colspan}">${item.note}</td>`;
+                    }
+                } else {
+                    const bgStyle = isRecentlyUpdated ? "recently-updated" : "";
+                    const doc = item.document;
+                    
+                    if (doc === "UPDATE （即時更新日期）") {
+                        row.innerHTML = `
+                            <td style="background-color:#FFFFFF;">${item.aircraft}</td>
+                            <td style="background-color:#FFFFFF;">${doc}</td>
+                            <td style="background-color:#FFFFFF;">${item.revision}</td>
+                            <td style="background-color:#FFF56E;">${item.date}</td>
+                            <td style="background-color:#FFFFFF;">${item.note}</td>
+                            ${isEditMode ? '<td style="background-color:#FFFFFF;"></td>' : ''}
+                        `;
+                    } else if (['ESPM','SWPM','CAT II /III MAINT','FLIGHT KIT MANAGEMENT'].includes(doc) && item.aircraft === "") {
+                        if (isEditing) {
+                            row.innerHTML = `
+                                <td style="background-color:#E6B3C7;">${item.aircraft}</td>
+                                <td style="background-color:#E6B3C7;">${doc}</td>
+                                <td style="background-color:#E6B3C7;"><input type="text" class="edit-input" value="${item.revision}" data-field="revision" data-index="${index}"></td>
+                                <td style="background-color:#E6B3C7;"><input type="text" class="edit-input" value="${item.date}" data-field="date" data-index="${index}"></td>
+                                <td style="background-color:#E6B3C7;">
+                                    <input type="text" class="edit-input" value="${item.note}" data-field="note" data-index="${index}">
+                                    <div class="edit-controls">
+                                        <button class="edit-btn save-btn" data-index="${index}">保存</button>
+                                        <button class="edit-btn cancel-btn" data-index="${index}">取消</button>
+                                    </div>
+                                </td>
+                                ${isEditMode ? `<td style="background-color:#E6B3C7;"><input type="checkbox" class="edit-checkbox" data-index="${index}" checked></td>` : ''}
+                            `;
+                        } else {
+                            row.innerHTML = `
+                                <td style="background-color:#E6B3C7;">${item.aircraft}</td>
+                                <td style="background-color:#E6B3C7;">${doc}</td>
+                                <td style="background-color:#E6B3C7;">${item.revision}</td>
+                                <td style="background-color:#E6B3C7;">${item.date}</td>
+                                <td style="background-color:#E6B3C7;">${item.note}</td>
+                                ${isEditMode ? `<td style="background-color:#E6B3C7;"><input type="checkbox" class="edit-checkbox" data-index="${index}" ${isSelected ? 'checked' : ''}></td>` : ''}
+                            `;
+                        }
+                    } else if (doc.includes("MEL 25-") && item.note && ['A321','A330','A350','B738','B744','B777'].includes(item.note)) {
+                        row.innerHTML = `
+                            <td style="background-color:#FFFFFF;">${item.aircraft}</td>
+                            <td style="background-color:#FFFFFF;">${doc}</td>
+                            <td style="background-color:#FFFFFF;">${item.revision}</td>
+                            <td style="background-color:#FFFFFF;">${item.date}</td>
+                            <td style="background-color:#FFFFFF;"><span class="type-aligned-data">${item.note}</span></td>
+                            ${isEditMode ? '<td style="background-color:#FFFFFF;"></td>' : ''}
+                        `;
+                    } else {
+                        if (isEditing) {
+                            row.innerHTML = `
+                                <td class="${bgStyle} ${selectedClass}">${item.aircraft}</td>
+                                <td class="${bgStyle} ${selectedClass}">${doc}</td>
+                                <td class="${bgStyle} ${selectedClass}"><input type="text" class="edit-input" value="${item.revision}" data-field="revision" data-index="${index}"></td>
+                                <td class="${bgStyle} ${selectedClass}"><input type="text" class="edit-input" value="${item.date}" data-field="date" data-index="${index}"></td>
+                                <td class="${bgStyle} ${selectedClass}">
+                                    <input type="text" class="edit-input" value="${item.note}" data-field="note" data-index="${index}">
+                                    <div class="edit-controls">
+                                        <button class="edit-btn save-btn" data-index="${index}">保存</button>
+                                        <button class="edit-btn cancel-btn" data-index="${index}">取消</button>
+                                    </div>
+                                </td>
+                                ${isEditMode ? `<td class="${bgStyle} ${selectedClass}"><input type="checkbox" class="edit-checkbox" data-index="${index}" checked></td>` : ''}
+                            `;
+                        } else {
+                            row.innerHTML = `
+                                <td class="${bgStyle} ${selectedClass}">${item.aircraft}</td>
+                                <td class="${bgStyle} ${selectedClass}">${doc}</td>
+                                <td class="${bgStyle} ${selectedClass}">${item.revision}</td>
+                                <td class="${bgStyle} ${selectedClass}">${item.date}</td>
+                                <td class="${bgStyle} ${selectedClass}">${item.note}</td>
+                                ${isEditMode ? `<td class="${bgStyle} ${selectedClass}"><input type="checkbox" class="edit-checkbox" data-index="${index}" ${isSelected ? 'checked' : ''}></td>` : ''}
+                            `;
+                        }
+                    }
+                }
+                table.appendChild(row);
+            });
+
+            // 使用事件委託處理所有編輯事件，避免重複綁定
+            // （綁定一次即可，不需要在每次生成時重新綁定）
+        }
+
+        // ---------- 事件委託設定（只執行一次） ----------
+        function setupEventDelegation() {
+            const table = document.getElementById('table-content');
+
+            // 處理 checkbox 變更
+            table.addEventListener('change', function(e) {
+                const cb = e.target.closest('.edit-checkbox');
+                if (cb) {
+                    const idx = parseInt(cb.dataset.index);
+                    if (cb.checked) {
+                        selectedRows.add(idx);
+                        editingRows.add(idx);
+                    } else {
+                        selectedRows.delete(idx);
+                        editingRows.delete(idx);
+                    }
+                    generateTable();
+                }
+            });
+
+            // 處理按鈕點擊（保存 / 取消）
+            table.addEventListener('click', function(e) {
+                const btn = e.target.closest('.edit-btn');
+                if (!btn) return;
+                const idx = parseInt(btn.dataset.index);
+                if (btn.classList.contains('save-btn')) {
+                    saveRowEdit(idx);
+                } else if (btn.classList.contains('cancel-btn')) {
+                    editingRows.delete(idx);
+                    generateTable();
+                }
+            });
+
+            // 處理輸入框的 keypress（Enter 保存）
+            table.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const input = e.target.closest('.edit-input');
+                    if (input) {
+                        const idx = parseInt(input.dataset.index);
+                        saveRowEdit(idx);
+                    }
+                }
+            });
+
+            // 處理日期輸入的自動格式化
+            table.addEventListener('input', function(e) {
+                const input = e.target.closest('.edit-input[data-field="date"]');
+                if (input) {
+                    autoFormatDate(input);
+                }
+            });
+        }
+
         // ---------- 表格隱藏/顯示 ----------
         document.getElementById('table-toggle').addEventListener('click', function() {
             const body = document.querySelector('.table-content-body');
@@ -761,6 +606,9 @@
 
         // ---------- 初始化 ----------
         window.addEventListener('DOMContentLoaded', function() {
+            // 先設定事件委託（只需一次）
+            setupEventDelegation();
+            // 生成表格
             generateTable();
         });
     </script>
